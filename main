@@ -1,4 +1,0 @@
-print("hello")
-
-def dice():
-    return "hello"
