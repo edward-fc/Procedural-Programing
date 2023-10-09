@@ -1,17 +1,20 @@
 #include <stdio.h>
 #include <string.h>
 int main(){
-    char name="edward";
-    int i;
+    char name[20];
     printf("Please enter your name:");
-    //scanf("%s",&name);
-    int letters = strlen(name);
-    char reverse=name;
-    for ( i = 0; i < letters; i++)
-    {
+    scanf("%s",name);
+    printf("%s",name);
+    int j = strlen(name)-1;
+    int i=0;
+    while (i<j){
+        printf("%d,%d\n",i,j);
         char c = name[i];
-        reverse[letters-i] = c;
-        printf("%s",reverse);
+        name[i]=name[j];
+        name[j]=c;
+        i++;
+        j--;
     }
-    printf("your reversed name is %s\n",reverse);
+
+    printf("your reversed name is %s\n",name);
 }
