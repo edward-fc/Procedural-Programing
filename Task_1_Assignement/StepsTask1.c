@@ -3,11 +3,11 @@
 #include <string.h>
 
 // Define an appropriate struct
-typedef struct {
+typedef struct FITNESS_DATA {
 	char date[11];
 	char time[6];
-	int steps;
-} FITNESS_DATA;
+	char steps[8];
+} FIT_DATA ;
 
 // Define any additional variables here
 
@@ -20,10 +20,11 @@ void tokeniseRecord(const char *input, const char *delimiter,
                     char *date, char *time, char *steps) {
     // Create a copy of the input string as strtok modifies the string
     char *inputCopy = strdup(input);
-    
+    delimiter = ",";
     // Tokenize the copied string
     char *token = strtok(inputCopy, delimiter);
-    if (token != NULL) {        strcpy(date, token);
+    if (token != NULL) {
+        strcpy(date, token);
     }
     
     token = strtok(NULL, delimiter);
@@ -45,13 +46,18 @@ void tokeniseRecord(const char *input, const char *delimiter,
 
 // Complete the main function
 int main() {
+    FIT_DATA DATA;
     FILE *file = fopen("FitnessData_2023.csv","r");
-    int buffer_size = 100;
+    int buffer_size = 100,count=0;
     char line_buffer[buffer_size],new_line[buffer_size];
-    while (fgets(line_buffer, buffer_size, file) != NULL) {
-        printf("%s", line_buffer);
-        tokeniseRecord(line_buffer,",")
+    while(fgets(line_buffer, buffer_size, file) != NULL){
+        char delimiter = ',';
+        // printf("%s", line_buffer);
+        tokeniseRecord(line_buffer,&delimiter,DATA.date,DATA.time,DATA.steps);
+        if ( count < 3) {printf("\n%s/%s/%s",DATA.date,DATA.time,DATA.steps);}
+        count++;
     }
+    printf("\n%d",count);
     fclose(file);
     return 0;
     
