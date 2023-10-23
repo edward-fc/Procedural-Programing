@@ -47,7 +47,7 @@ void tokeniseRecord(const char *input, const char *delimiter,
 // Complete the main function
 int main() {
     FIT_DATA DATA;
-    FILE *file = fopen("FitnessData_2023.csv","r");
+    FILE *file = fopen("FitnessData_2024.csv","r");
     int buffer_size = 100,count=0;
     char line_buffer[buffer_size],new_line[buffer_size];
     while(fgets(line_buffer, buffer_size, file) != NULL){
@@ -57,8 +57,7 @@ int main() {
         if ( count < 3) {printf("\n%s/%s/%s",DATA.date,DATA.time,DATA.steps);}
         count++;
     }
-    printf("\n%d",count);
+    printf("\n%d\n",count);
     fclose(file);
     return 0;
-    
 }
