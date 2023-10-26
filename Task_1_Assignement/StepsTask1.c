@@ -3,11 +3,11 @@
 #include <string.h>
 
 // Define an appropriate struct
-typedef struct FITNESS_DATA {
+typedef struct  {
 	char date[11];
 	char time[6];
 	char steps[8];
-} FIT_DATA ;
+} FITNESS_DATA ;
 
 // Define any additional variables here
 
@@ -45,7 +45,7 @@ void tokeniseRecord(const char *input, const char *delimiter,
 
 // Complete the main function
 int main() {
-    FIT_DATA DATA;
+    FITNESS_DATA DATA;
     FILE *file = fopen("FitnessData_2023.csv","r");
     int buffer_size = 100,count=0;
     char line_buffer[buffer_size],delimiter = ',';
