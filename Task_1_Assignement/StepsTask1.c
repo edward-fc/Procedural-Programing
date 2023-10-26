@@ -50,7 +50,6 @@ int main() {
     int buffer_size = 100,count=0;
     char line_buffer[buffer_size],delimiter = ',';
     while(fgets(line_buffer, buffer_size, file) != NULL){
-        //printf("%s", line_buffer);
         tokeniseRecord(line_buffer,&delimiter,DATA.date,DATA.time,DATA.steps);
         if ( count < 3) {printf("%s/%s/%s",DATA.date,DATA.time,DATA.steps);}
         count++;
