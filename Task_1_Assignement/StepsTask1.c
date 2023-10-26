@@ -20,7 +20,6 @@ void tokeniseRecord(const char *input, const char *delimiter,
                     char *date, char *time, char *steps) {
     // Create a copy of the input string as strtok modifies the string
     char *inputCopy = strdup(input);
-    delimiter = ",";
     // Tokenize the copied string
     char *token = strtok(inputCopy, delimiter);
     if (token != NULL) {
@@ -47,17 +46,16 @@ void tokeniseRecord(const char *input, const char *delimiter,
 // Complete the main function
 int main() {
     FIT_DATA DATA;
-    FILE *file = fopen("FitnessData_2024.csv","r");
+    FILE *file = fopen("FitnessData_2023.csv","r");
     int buffer_size = 100,count=0;
-    char line_buffer[buffer_size],new_line[buffer_size];
+    char line_buffer[buffer_size],delimiter = ',';
     while(fgets(line_buffer, buffer_size, file) != NULL){
-        char delimiter = ',';
-        // printf("%s", line_buffer);
+        //printf("%s", line_buffer);
         tokeniseRecord(line_buffer,&delimiter,DATA.date,DATA.time,DATA.steps);
-        if ( count < 3) {printf("\n%s/%s/%s",DATA.date,DATA.time,DATA.steps);}
+        if ( count < 3) {printf("%s/%s/%s",DATA.date,DATA.time,DATA.steps);}
         count++;
     }
-    printf("\n%d\n",count);
+    printf("Number of records in file: %d\n",count);
     fclose(file);
     return 0;
 }
