@@ -9,6 +9,7 @@ typedef struct  {
 	char steps[8];
 } FITNESS_DATA ;
 
+
 // Define any additional variables here
 
 
@@ -63,6 +64,7 @@ int main() {
         if (*DATA.steps && DATA.steps[len] == '\n') {
             DATA.steps[len] = '\0';
             }
+        
         //Copy the 3 first lines to print them later
         if ( count < 3) {
             strcpy(MEMORIE[count].date, DATA.date);
@@ -76,7 +78,7 @@ int main() {
     //Print the Three first lines
     for (int i = 0; i < 3; i++)
     {
-        printf("%s/%s/%s\n",MEMORIE[i].date,MEMORIE[i].time,MEMORIE[i].steps);
+        printf("%s/%s/%d\n",MEMORIE[i].date,MEMORIE[i].time,atoi(MEMORIE[i].steps));
     }
     //Close the file
     fclose(file);
