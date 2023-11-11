@@ -16,7 +16,7 @@ void tokeniseRecord(const char *input, const char *delimiter,
                     char *date, char *time, char *steps) {
     // Create a copy of the input string as strtok modifies the string
     char *inputCopy = strdup(input);
-    
+    delimiter=",";
     // Tokenize the copied string
     char *token = strtok(inputCopy, delimiter);
     if (token != NULL) {
@@ -58,7 +58,6 @@ void A(FITNESS_DATA MEMORY[],char *filename,char *count){
         if (DATA.steps && DATA.steps[len] == '\n') {
             DATA.steps[len] = '\0';
             }
-        printf("%d\n",function_count);
         //Copy the 3 first lines to print them later
         
         strcpy(MEMORY[function_count].date, DATA.date);
@@ -76,54 +75,82 @@ void A(FITNESS_DATA MEMORY[],char *filename,char *count){
 
 // Complete the main function
 int main() {
-    char input, filename,count[6],token [50];
-    int QUIT = 1;
+    char input, filename,count[6],token [50],minimun[6];
+    int QUIT = 1,rank=0;
     FITNESS_DATA DATA[10000]; 
-    while (QUIT){
+    //use while(scanf("%[LC]", &a) == 1) next time link https://stackoverflow.com/questions/19911923/using-the-scanf-function-in-while-loop
+    for(int Menu=0;Menu<QUIT;Menu++){
         printf ("\n");
-        printf ("Select A to Specify the filename to be imported\n");
-        printf ("Select B to  Display the total number of records in the file\n");
-        printf ("Select C to  Find the date and time of the timeslot with the fewest steps\n");
-        printf ("Select D to Find the data and time of the timeslot with the largest number of steps\n");
-        printf ("Select E to Find the mean step count of all the records in the file\n");
-        printf ("Select F to Find the longest continuous period where the step count is above 500 steps\n");
-        printf ("Select Q to quit\n");
+        printf ("Menu Options:\n");
+        printf ("A: Specify the filename to be imported\n");
+        printf ("B: Display the total number of records in the file\n");
+        printf ("C: Find the date and time of the timeslot with the fewest steps\n");
+        printf ("D: Find the date and time of the timeslot with the largest number of steps\n");
+        printf ("E: Find the mean step count of all the records in the file\n");
+        printf ("F: Find the longest continuous period where the step count is above 500 steps\n");
+        printf ("Q: Quit\n");
+        printf ("Enter choice: \n");
         scanf("%c",&input);
 
         switch (input)
         {
-            case 'A':; 
-            case 'a':;  
+            case 'A':
+            printf("Enter the file name of the data:\n");
             scanf("%s\n",token);
-            // sprintf(filename, "%s", token);
             A(DATA,token,count);
-                        break;
+            for(int i=0; i<atoi(count);i++){
+                printf("%s\n",DATA[i].steps);
+            }
+            break;
+
+            case 'a':
+            printf("Enter the file name of the data:\n");
+            scanf("%s\n",token);
+            A(DATA,token,count);
+            break;
             
 
-            case 'B':;
-            case 'b':;
+            case 'B':
             printf("total count %s\n",count);
-                        break;
-            case 'C': 
-            case 'c': 
-                        break;
-            case 'D': 
-            case 'd': 
-                        break;
-            case 'E': 
-            case 'e': 
-                        break;
-            case 'F': 
-            case 'f': 
-                        break;
+            break;
+            case 'b':
+            printf("total count %s\n",count);
+            break;
+            case 'C':break; 
+            case 'c':
+            strcpy(minimun, DATA[0].steps);
+            for(int i=0; i<atoi(count);i++){
+                if (atoi(minimun) < atoi(DATA[i].steps)){
+                    strcpy(minimun, DATA[i].steps);
+                    rank=i;
+                }
+            printf("the date and time of the timeslot with the fewest steps: %s and %s",DATA[rank].time,DATA[rank].date);
+            }
+            break;
+
+            case 'D':break; 
+            case 'd':break;
+
+            case 'E':break;
+            case 'e':break;
+
+            case 'F':break;
+            case 'f':break;
+
             case 'q':
-            case 'Q':;
+            QUIT=0;
+            break;
+            case 'Q':
             QUIT=0;
             break;
 
-            default:  break;
+            default:
+            printf("Invalid choice. Try again.");
+            QUIT=0;
+            break;
         }
-    }
+        QUIT++;
+        }
         return 0;
         }
 
