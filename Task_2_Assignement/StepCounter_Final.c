@@ -72,35 +72,26 @@ void A(FITNESS_DATA MEMORY[],char *filename,char *count){
     //Close the file
     fclose(file);
 }
-
-// Complete the main function
-int main() {
-    char input, filename,count[6],token [50],minimun[6];
+void MENU(FITNESS_DATA DATA[]){
     int QUIT = 1,rank=0;
-    FITNESS_DATA DATA[10000]; 
-    //use while(scanf("%[LC]", &a) == 1) next time link https://stackoverflow.com/questions/19911923/using-the-scanf-function-in-while-loop
-    for(int Menu=0;Menu<QUIT;Menu++){
-        printf ("\n");
-        printf ("Menu Options:\n");
-        printf ("A: Specify the filename to be imported\n");
-        printf ("B: Display the total number of records in the file\n");
-        printf ("C: Find the date and time of the timeslot with the fewest steps\n");
-        printf ("D: Find the date and time of the timeslot with the largest number of steps\n");
-        printf ("E: Find the mean step count of all the records in the file\n");
-        printf ("F: Find the longest continuous period where the step count is above 500 steps\n");
-        printf ("Q: Quit\n");
-        printf ("Enter choice: \n");
-        scanf("%c",&input);
-
-        switch (input)
-        {
+    char input, filename,token [50],count[6],minimun[6];
+    printf ("\n");
+    printf ("Menu Options:\n");
+    printf ("A: Specify the filename to be imported\n");
+    printf ("B: Display the total number of records in the file\n");
+    printf ("C: Find the date and time of the timeslot with the fewest steps\n");
+    printf ("D: Find the date and time of the timeslot with the largest number of steps\n");
+    printf ("E: Find the mean step count of all the records in the file\n");
+    printf ("F: Find the longest continuous period where the step count is above 500 steps\n");
+    printf ("Q: Quit\n");
+    printf ("Enter choice: \n");
+    //scanf("%c",&input);
+    while(scanf("%[AaBbCcDdEeFfQq]", &input) == 1){
+        switch (input){
             case 'A':
             printf("Enter the file name of the data:\n");
             scanf("%s\n",token);
             A(DATA,token,count);
-            for(int i=0; i<atoi(count);i++){
-                printf("%s\n",DATA[i].steps);
-            }
             break;
 
             case 'a':
@@ -109,14 +100,25 @@ int main() {
             A(DATA,token,count);
             break;
             
-
             case 'B':
             printf("total count %s\n",count);
             break;
+
             case 'b':
             printf("total count %s\n",count);
             break;
-            case 'C':break; 
+
+            case 'C':
+            strcpy(minimun, DATA[0].steps);
+            for(int i=0; i<atoi(count);i++){
+                if (atoi(minimun) < atoi(DATA[i].steps)){
+                    strcpy(minimun, DATA[i].steps);
+                    rank=i;
+                }
+            }
+            printf("the date and time of the timeslot with the fewest steps: %s and %s\n",DATA[rank].time,DATA[rank].date);
+            break;
+
             case 'c':
             strcpy(minimun, DATA[0].steps);
             for(int i=0; i<atoi(count);i++){
@@ -124,8 +126,9 @@ int main() {
                     strcpy(minimun, DATA[i].steps);
                     rank=i;
                 }
-            printf("the date and time of the timeslot with the fewest steps: %s and %s",DATA[rank].time,DATA[rank].date);
             }
+            printf("the date and time of the timeslot with the fewest steps: %s and %s\n",DATA[rank].time,DATA[rank].date);
+            
             break;
 
             case 'D':break; 
@@ -140,20 +143,23 @@ int main() {
             case 'q':
             QUIT=0;
             break;
+            
             case 'Q':
             QUIT=0;
             break;
-
-            default:
-            printf("Invalid choice. Try again.");
-            QUIT=0;
-            break;
         }
-        QUIT++;
         }
-        return 0;
+}
+// Complete the main function
+int main() {
+    char input, filename;
+    FITNESS_DATA DATA[10000]; 
+    //use while(scanf("%[AaBbCcDdEeFfQq]", &a) == 1) next time link https://stackoverflow.com/questions/19911923/using-the-scanf-function-in-while-loop
+    for(int Menu=0;Menu<10;Menu++){
+        MENU(DATA);
         }
-
+        return 0;   
+        }
 
 
 
