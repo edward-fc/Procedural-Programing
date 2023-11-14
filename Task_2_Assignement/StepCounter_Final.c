@@ -78,12 +78,11 @@ char get_user_answer(){
     return token;
 }
 void MENU(FITNESS_DATA DATA[]){
-    int QUIT=1,rank=0;
-    char input, filename,token [50],count[6],minimun[6];
+    int QUIT=1,rank=0,mean=0,longest=0,new_longest=0, new_run=1,rank_start=0,rank_end=0;
+    char input, filename,token [50],count[6],minimun[6],maximun[6];
     
 
     while(QUIT){
-        printf ("\n");
         printf ("Menu Options:\n");
         printf ("A: Specify the filename to be imported\n");
         printf ("B: Display the total number of records in the file\n");
@@ -92,14 +91,15 @@ void MENU(FITNESS_DATA DATA[]){
         printf ("E: Find the mean step count of all the records in the file\n");
         printf ("F: Find the longest continuous period where the step count is above 500 steps\n");
         printf ("Q: Quit\n");
-        printf ("Enter choice: \n");
+        printf ("Enter choice:");
         scanf(" %c",&input);
         switch (input){
             case 'A':
             case 'a':
-            printf("Enter the file name of the data:\n");
+            printf("Input filename: ");
             scanf("%s\n",token);
             A(DATA,token,count);
+            printf("File successfully loaded.\n");
             break;
             
             case 'B':
@@ -111,16 +111,6 @@ void MENU(FITNESS_DATA DATA[]){
             break;
 
             case 'C':
-            strcpy(minimun, DATA[0].steps);
-            for(int i=0; i<atoi(count);i++){
-                if (atoi(minimun) < atoi(DATA[i].steps)){
-                    strcpy(minimun, DATA[i].steps);
-                    rank=i;
-                }
-            }
-            printf("the date and time of the timeslot with the fewest steps: %s and %s\n",DATA[rank].time,DATA[rank].date);
-            break;
-
             case 'c':
             strcpy(minimun, DATA[0].steps);
             for(int i=0; i<atoi(count);i++){
@@ -129,17 +119,53 @@ void MENU(FITNESS_DATA DATA[]){
                     rank=i;
                 }
             }
-            printf("the date and time of the timeslot with the fewest steps: %s and %s\n",DATA[rank].time,DATA[rank].date);
+            printf("Fewest steps: %s %s\n",DATA[rank].time,DATA[rank].date);
             break;
 
-            case 'D':break; 
-            case 'd':break;
+            case 'D': 
+            case 'd':
+            strcpy(maximun, DATA[0].steps);
+            for(int i=0; i<atoi(count);i++){
+                if (atoi(maximun) < atoi(DATA[i].steps)){
+                    strcpy(maximun, DATA[i].steps);
+                    rank=i;
+                }
+            }
+            printf("Largest steps: %s %s\n",DATA[rank].time,DATA[rank].date);
+            break;
 
-            case 'E':break;
-            case 'e':break;
+            case 'E':
+            case 'e':
+            
+            for (int i = 0; i<atoi(count); i++){
+                mean += atoi(DATA[i].steps);
+            }
+            mean=mean/atoi(count);
+            printf("Mean step count: %i\n",mean);
+            break;
 
-            case 'F':break;
-            case 'f':break;
+            case 'F':
+            case 'f':
+            for (int i = 0; i < atoi(count); i++){
+                if (atoi(DATA[i].steps) > 500){
+                    new_longest++; 
+                    if (new_run){
+                        new_run=0;
+                        rank = i;
+                    }
+                }else{
+                    if (new_longest>=longest){
+                        longest = new_longest;
+                        rank_start=rank;
+                        rank_end = i-1;
+                    }
+                    new_run = 1;
+                    new_longest=0;
+                }
+            }
+            printf("Longest period start: %s %s\n",DATA[rank_start].time,DATA[rank_start].date);
+            printf("Longest period end: %s %s\n",DATA[rank_end].time,DATA[rank_end].date);
+            break;
 
             case 'q':
             case 'Q':
@@ -147,6 +173,9 @@ void MENU(FITNESS_DATA DATA[]){
                 QUIT=0;
             // }
             break;
+
+            default:
+            printf("Invalid choice. Try again.\n");
         }
     }
 }
