@@ -72,28 +72,30 @@ void A(FITNESS_DATA MEMORY[],char *filename,char *count){
     //Close the file
     fclose(file);
 }
+char get_user_answer(){
+    char token;
+    scanf("%[AaBbCcDdEeFfQq]", &token);
+    return token;
+}
 void MENU(FITNESS_DATA DATA[]){
-    int QUIT = 1,rank=0;
+    int QUIT=1,rank=0;
     char input, filename,token [50],count[6],minimun[6];
-    printf ("\n");
-    printf ("Menu Options:\n");
-    printf ("A: Specify the filename to be imported\n");
-    printf ("B: Display the total number of records in the file\n");
-    printf ("C: Find the date and time of the timeslot with the fewest steps\n");
-    printf ("D: Find the date and time of the timeslot with the largest number of steps\n");
-    printf ("E: Find the mean step count of all the records in the file\n");
-    printf ("F: Find the longest continuous period where the step count is above 500 steps\n");
-    printf ("Q: Quit\n");
-    printf ("Enter choice: \n");
-    //scanf("%c",&input);
-    while(scanf("%[AaBbCcDdEeFfQq]", &input) == 1){
+    
+
+    while(QUIT){
+        printf ("\n");
+        printf ("Menu Options:\n");
+        printf ("A: Specify the filename to be imported\n");
+        printf ("B: Display the total number of records in the file\n");
+        printf ("C: Find the date and time of the timeslot with the fewest steps\n");
+        printf ("D: Find the date and time of the timeslot with the largest number of steps\n");
+        printf ("E: Find the mean step count of all the records in the file\n");
+        printf ("F: Find the longest continuous period where the step count is above 500 steps\n");
+        printf ("Q: Quit\n");
+        printf ("Enter choice: \n");
+        scanf(" %c",&input);
         switch (input){
             case 'A':
-            printf("Enter the file name of the data:\n");
-            scanf("%s\n",token);
-            A(DATA,token,count);
-            break;
-
             case 'a':
             printf("Enter the file name of the data:\n");
             scanf("%s\n",token);
@@ -128,7 +130,6 @@ void MENU(FITNESS_DATA DATA[]){
                 }
             }
             printf("the date and time of the timeslot with the fewest steps: %s and %s\n",DATA[rank].time,DATA[rank].date);
-            
             break;
 
             case 'D':break; 
@@ -141,25 +142,26 @@ void MENU(FITNESS_DATA DATA[]){
             case 'f':break;
 
             case 'q':
-            QUIT=0;
-            break;
-            
             case 'Q':
-            QUIT=0;
+            // if (input == "q" || input == "Q" ){
+                QUIT=0;
+            // }
             break;
         }
-        }
+    }
 }
 // Complete the main function
 int main() {
-    char input, filename;
+    char input, filename,output;
     FITNESS_DATA DATA[10000]; 
     //use while(scanf("%[AaBbCcDdEeFfQq]", &a) == 1) next time link https://stackoverflow.com/questions/19911923/using-the-scanf-function-in-while-loop
-    for(int Menu=0;Menu<10;Menu++){
-        MENU(DATA);
-        }
-        return 0;   
-        }
+    
+    MENU(DATA);
+    // get_user_answer(&output);
+    // printf("get user info%c\n",output);
+    
+    return 0;   
+    }
 
 
 
