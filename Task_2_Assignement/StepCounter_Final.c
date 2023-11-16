@@ -97,15 +97,12 @@ void MENU(FITNESS_DATA DATA[]){
             case 'A':
             case 'a':
             printf("Input filename: ");
-            scanf("%s\n",token);
+            scanf("%s",token);
             A(DATA,token,count);
             printf("File successfully loaded.\n");
             break;
             
             case 'B':
-            printf("total count %s\n",count);
-            break;
-
             case 'b':
             printf("total count %s\n",count);
             break;
@@ -169,16 +166,15 @@ void MENU(FITNESS_DATA DATA[]){
 
             case 'q':
             case 'Q':
-            // if (input == "q" || input == "Q" ){
                 QUIT=0;
-            // }
-            break;
+                break;
 
             default:
             printf("Invalid choice. Try again.\n");
         }
     }
 }
+
 // Complete the main function
 int main() {
     char input, filename,output;
