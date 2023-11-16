@@ -74,7 +74,7 @@ int main() {
     fptr = fopen(new_filename ,"w");
     
     for (int i = 0; i<counter;i++){
-        printf("%d\t%s\t%s",DATA[i].steps,DATA[i].time,DATA[i].date);
+        // printf("%d\t%s\t%s",DATA[i].steps,DATA[i].time,DATA[i].date);
         fprintf(fptr,"%d\t%s\t%s\n",DATA[i].steps,DATA[i].time,DATA[i].date);
     }
 
