@@ -26,12 +26,8 @@ void fetch_store_data(FITNESS_DATA MEMORY[],char *filename,char *count){
     fclose(file);
     }
 }
-// char get_user_answer(){
-//     char token;
-//     scanf("%[AaBbCcDdEeFfQq]", &token);
-//     return token;
-// }
-void MENU(FITNESS_DATA DATA[]){
+
+int MENU(FITNESS_DATA DATA[]){
     int QUIT=1,rank=0,mean=0,longest=0,new_longest=0, new_run=1,rank_start=0,rank_end=0;
     char input, filename,token [50],count[6],minimun[6],maximun[6],fail=0;
     
@@ -58,6 +54,7 @@ void MENU(FITNESS_DATA DATA[]){
             if (fail){
                 printf("Could not find or open the file.\n");
                 QUIT = 0;
+                return 1;
             }
             else{
                 printf("File successfully loaded.\n");
@@ -118,6 +115,7 @@ void MENU(FITNESS_DATA DATA[]){
             printf("Invalid choice. Try again.\n");
         }
     }
+    return 0;
 }
 
 // Complete the main function
@@ -126,7 +124,9 @@ int main() {
     FITNESS_DATA DATA[10000]; 
     //use while(scanf("%[AaBbCcDdEeFfQq]", &a) == 1) next time link https://stackoverflow.com/questions/19911923/using-the-scanf-function-in-while-loop
     
-    MENU(DATA);
+    if (MENU(DATA)){
+        return 1;
+    }
     // get_user_answer(&output);
     // printf("get user info%c\n",output);
     
