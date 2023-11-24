@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "FitnessDataStruct.h"
 
 // Struct moved to header file
@@ -17,7 +14,6 @@ void fetch_store_data(FITNESS_DATA MEMORY[],char *filename,char *count){
     FITNESS_DATA DATA;
     //Open the file
     FILE *file = open_file(filename,"r");
-    printf("%s\n",file);
     if (file)
     {       
     int function_count;
@@ -61,6 +57,7 @@ void MENU(FITNESS_DATA DATA[]){
             fail = data_checker(DATA,atoi(count));
             if (fail){
                 printf("Could not find or open the file.\n");
+                QUIT = 0;
             }
             else{
                 printf("File successfully loaded.\n");
@@ -69,7 +66,7 @@ void MENU(FITNESS_DATA DATA[]){
             
             case 'B':
             case 'b':
-            printf("total count %s\n",count);
+            printf("Total records: %s\n",count);
             break;
 
             case 'C':
@@ -108,8 +105,8 @@ void MENU(FITNESS_DATA DATA[]){
                     new_longest=0;
                 }
             }
-            printf("Longest period start: %s %s\n",DATA[rank_start].time,DATA[rank_start].date);
-            printf("Longest period end: %s %s\n",DATA[rank_end].time,DATA[rank_end].date);
+            printf("Longest period start: %s %s\n",DATA[rank_start].date,DATA[rank_start].time);
+            printf("Longest period end: %s %s\n",DATA[rank_end].date,DATA[rank_end].time);
             break;
 
             case 'q':

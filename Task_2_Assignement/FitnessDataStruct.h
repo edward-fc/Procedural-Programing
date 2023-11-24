@@ -3,6 +3,8 @@
 // #define FITNESS_DATA_STRUCT_H
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 // Define an appropriate struct
 typedef struct {
@@ -143,7 +145,7 @@ int find_highest(FITNESS_DATA* DATA, int count)
 			rank=i;
         }
     }
-    printf("Largest steps: %s %s\n",DATA[rank].time,DATA[rank].date);
+    printf("Largest steps: %s %s\n",DATA[rank].date,DATA[rank].time);
     return maximun;
 }
 
@@ -164,7 +166,7 @@ int find_lowest(FITNESS_DATA* DATA, int count)
 			rank=i;
         }
     }
-    printf("Fewest steps: %s %s\n",DATA[rank].time,DATA[rank].date);
+    printf("Fewest steps: %s %s\n",DATA[rank].date,DATA[rank].time);
     return minimun;
 }
 
