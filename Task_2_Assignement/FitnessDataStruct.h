@@ -118,9 +118,9 @@ int data_checker(FITNESS_DATA *DATA, int count)
  * @param numReadings The number of readings in the array
  * @return float The mean of the readings.
  */
-int find_mean(FITNESS_DATA* dataArray, int numReadings)
+float find_mean(FITNESS_DATA* dataArray, int numReadings)
 {
-    int mean = 0;
+    float mean = 0;
     for (int i=0; i<numReadings;i++){
         mean += atoi(dataArray[i].steps);
     }

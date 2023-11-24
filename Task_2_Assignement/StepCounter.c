@@ -28,8 +28,9 @@ void fetch_store_data(FITNESS_DATA MEMORY[],char *filename,char *count){
 }
 
 int MENU(FITNESS_DATA DATA[]){
-    int QUIT=1,rank=0,mean=0,longest=0,new_longest=0, new_run=1,rank_start=0,rank_end=0;
+    int QUIT=1,rank=0,longest=0,new_longest=0, new_run=1,rank_start=0,rank_end=0;
     char input, filename,token [50],count[6],minimun[6],maximun[6],fail=0;
+    float mean=0;
     
 
     while(QUIT){
@@ -80,7 +81,7 @@ int MENU(FITNESS_DATA DATA[]){
             case 'e':
             
             mean = find_mean(DATA,atoi(count));
-            printf("Mean step count: %i\n",mean);
+            printf("Mean step count: %.0f\n",mean);
             break;
 
             case 'F':
