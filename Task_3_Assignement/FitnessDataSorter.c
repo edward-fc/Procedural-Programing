@@ -50,11 +50,14 @@ int read_file(FILE *inputFile, FitnessData *dataArray)
 int main() {
     FitnessData DATA[100];
     char filename[100];
+    printf("Enter Filename: ");
     scanf(" %s",filename);
     char new_filename[100];
     strcpy(new_filename,filename);
     strcat(new_filename,".tsv");
+
     
+
     FILE *input = open_file(filename,"r");
 
     if (!input)
@@ -68,7 +71,7 @@ int main() {
     FILE *fptr;
 
 
-    printf("%s\n",filename);
+    printf("\nData sorted and written to %s\n",new_filename);
 
 
     fptr = fopen(new_filename ,"w");
