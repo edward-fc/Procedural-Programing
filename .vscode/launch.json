@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/zwanz/Downloads/Procedural/Procedural-Programing/Task_2_Assignement",
-      "program": "c:/Users/zwanz/Downloads/Procedural/Procedural-Programing/Task_2_Assignement/build/Debug/outDebug",
+      "cwd": "c:/Users/zwanz/Downloads/Procedural/Procedural-Programing/Task_1_Assignement",
+      "program": "c:/Users/zwanz/Downloads/Procedural/Procedural-Programing/Task_1_Assignement/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
