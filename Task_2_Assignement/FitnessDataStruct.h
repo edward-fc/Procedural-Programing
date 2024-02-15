@@ -17,31 +17,20 @@ typedef struct {
 // Inputs: character array representing a row; the delimiter character
 // Ouputs: date character array; time character array; steps character array
 
-void tokeniseRecord(const char *input, const char *delimiter,
-                    char *date, char *time, char *steps) {
+void tokeniseRecord( const char *input, const char *delimiter,
+                    char *row[1],char *reste[10]) {
     // Create a copy of the input string as strtok modifies the string
     char *inputCopy = strdup(input);
     delimiter=",";
     // Tokenize the copied string
     char *token = strtok(inputCopy, delimiter);
-    if (token != NULL) {
-        strcpy(date, token);
-    }
-    
+    strcpy(row[0], token);
     token = strtok(NULL, delimiter);
-    if (token != NULL) {
-        strcpy(time, token);
-    }
-    
-    token = strtok(NULL, delimiter);
-    if (token != NULL) {
-        strcpy(steps, token);
-    }
-    
+    printf("%s",token);
+    strcpy(reste[0], token);
     // Free the duplicated string
     free(inputCopy);
-
-                    }
+    }
 
 /**
  * @brief Opens the file in the correct mode
