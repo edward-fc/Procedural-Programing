@@ -60,13 +60,13 @@ int read_file(FILE *inputFile, char output[100][100])
  * @param Count The number of readings in the array
  * @return int Return 0 if there are no errors, 1 if you find an error.
  */
-int data_checker(MAZE *MAZE, int count)
+int data_checker(MAZE MAZE, int count)
 {
 	if (count == 0){
 		return 1;
 	}
     for(int i = 0; i< count; i++){
-        if (MAZE->map[i] == NULL){
+        if (MAZE.map[i] == NULL){
             return 1;
         }
     }
@@ -80,17 +80,17 @@ int data_checker(MAZE *MAZE, int count)
  * @param Player_position The coordonates of Player at all times on the MAP
  * @return int Return 0 if there are no errors
  */
-int print_MAZE(MAZE *MAZE, Player_position Player)
+int print_MAZE(MAZE MAZE, Player_position Player)
 {
-    for (int row_index = 0; row_index < MAZE->MAX_row; row_index++)
+    for (int row_index = 0; row_index < MAZE.MAX_row; row_index++)
     {
-        for (int col_index = 0; col_index < MAZE->MAX_col; col_index++)
+        for (int col_index = 0; col_index < MAZE.MAX_col; col_index++)
         {
             if (row_index == Player.x && col_index == Player.y){
                 printf("%s","P");
             }
             else{
-                printf("%c",MAZE->map[row_index][col_index]);
+                printf("%c",MAZE.map[row_index][col_index]);
             }
             
         }
@@ -106,10 +106,10 @@ int print_MAZE(MAZE *MAZE, Player_position Player)
  * @param Player_position The coordonates of Player at all times on the MAP
  * @return int Return 0 if there are no errors
  */
-void set_player_position(MAZE *MAZE, Player_position Player)
+void set_player_position(MAZE MAZE, Player_position Player)
 {
-    Player.x = MAZE->start_pos_x;
-    Player.y = MAZE->start_pos_y;
+    Player.x = MAZE.start_pos_x;
+    Player.y = MAZE.start_pos_y;
 }
 /**
  * @brief Find the start position in the file
@@ -117,13 +117,13 @@ void set_player_position(MAZE *MAZE, Player_position Player)
  * containing the len of the file and start/end positions
  * @return int Return 0 if there are no errors
  */
-int find_start_postion(MAZE *MAZE){
+int find_start_postion(MAZE MAZE){
     int record_row_index,record_col_index;
-    for (int row_index = 0; row_index < MAZE->MAX_row; row_index++)
+    for (int row_index = 0; row_index < MAZE.MAX_row; row_index++)
     {
-        for (int col_index = 0; col_index < MAZE->MAX_col; col_index++)
+        for (int col_index = 0; col_index < MAZE.MAX_col; col_index++)
         {
-            if (MAZE->map[row_index][col_index] == "S") {
+            if (MAZE.map[row_index][col_index] == "S") {
                 record_row_index = row_index;
                 record_col_index = col_index;
             }          
@@ -138,13 +138,13 @@ int find_start_postion(MAZE *MAZE){
  * containing the len of the file and start/end positions
  * @return int Return 0 if there are no errors
  */
-int find_end_postion(MAZE *MAZE){
+int find_end_postion(MAZE MAZE){
     int record_row_index,record_col_index;
-    for (int row_index = 0; row_index < MAZE->MAX_row; row_index++)
+    for (int row_index = 0; row_index < MAZE.MAX_row; row_index++)
     {
-        for (int col_index = 0; col_index < MAZE->MAX_col; col_index++)
+        for (int col_index = 0; col_index < MAZE.MAX_col; col_index++)
         {
-            if (MAZE->map[row_index][col_index] == "E") {
+            if (MAZE.map[row_index][col_index] == "E") {
                 record_row_index = row_index;
                 record_col_index = col_index;
             }          
@@ -160,26 +160,26 @@ int find_end_postion(MAZE *MAZE){
  * @param Player_position The coordonates of Player at all times on the MAP
  * @return int Return 0 if there are no errors and return 1 if there is a error
  */
-void movePlayer(MAZE *MAZE, Player_position Player,char input)
+void movePlayer(MAZE MAZE, Player_position Player,char input)
 {
     int recorded_x = Player.x,recorded_y = Player.y;
     if (input == "W"){
-        if (MAZE->map[Player.x+1][Player.y] == " "){
+        if (MAZE.map[Player.x+1][Player.y] == " "){
                 Player.x += 1;
         }
     }
     if (input == "S"){
-        if (MAZE->map[Player.x+1][Player.y] == " "){
+        if (MAZE.map[Player.x+1][Player.y] == " "){
                 Player.x -= 1;
         }
     }
     if (input == "D"){
-        if (MAZE->map[Player.x+1][Player.y] == " "){
+        if (MAZE.map[Player.x+1][Player.y] == " "){
                 Player.y += 1;
         }
     }
     if (input == "A"){
-        if (MAZE->map[Player.x+1][Player.y] == " "){
+        if (MAZE.map[Player.x+1][Player.y] == " "){
                 Player.y -= 1;
         }
     }
@@ -195,9 +195,9 @@ void movePlayer(MAZE *MAZE, Player_position Player,char input)
  * @param Player_position The coordonates of Player at all times on the MAP
  * @return int Return 0 ends the loop and return 1 there is an error or no win condition
  */
-void checkWinCondition(MAZE *MAZE, Player_position Player)
+void checkWinCondition(MAZE MAZE, Player_position Player)
 {
-    if (Player.x == MAZE->end_pos_x && Player.y == MAZE->end_pos_y)
+    if (Player.x == MAZE.end_pos_x && Player.y == MAZE.end_pos_y)
     {
         return 0;
     }
