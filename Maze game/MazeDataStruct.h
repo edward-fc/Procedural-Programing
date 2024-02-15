@@ -188,4 +188,20 @@ void movePlayer(MAZE *MAZE, Player_position Player,char input)
     }
     return 0;
 }
+/**
+ * @brief Check Win Condition then end the loop
+ * @param MAZE The array of data from the file and 
+ * containing the len of the file and start/end positions
+ * @param Player_position The coordonates of Player at all times on the MAP
+ * @return int Return 0 ends the loop and return 1 there is an error or no win condition
+ */
+void checkWinCondition(MAZE *MAZE, Player_position Player)
+{
+    if (Player.x == MAZE->end_pos_x && Player.y == MAZE->end_pos_y)
+    {
+        return 0;
+    }
+    return 1;
+    
+}
 // #endif // FITNESS_DATA_STRUCT_H
