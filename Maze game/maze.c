@@ -3,15 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_SIZE 100
 
-typedef struct{
-    int x, y;
-}Player_position;
-typedef struct {
-    int MAX_row,MAX_col,start_pos_x,start_pos_y,end_pos_x,end_pos_y;
-    char map[MAX_SIZE][MAX_SIZE];
-} MAZE;
 
 int main(char filename){
     MAZE MAZE;

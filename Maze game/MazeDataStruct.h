@@ -6,35 +6,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Define an appropriate struct
+#define MAX_SIZE 100
+//define player
+typedef struct{
+    int x, y;
+}Player_position;
+//define maze structure
 typedef struct {
-	char row[100];
-} MAZE_ROW;
-
-// This is your helper function. Do not change it in any way.
-// Inputs: character array representing a row; the delimiter character
-// Ouputs: date character array; time character array; steps character array
-
-void tokeniseRecord(const char *input, const char *delimiter,
-                    char *row) {
-    // Create a copy of the input string as strtok modifies the string
-    char *inputCopy = strdup(input);
-    delimiter=",";
-    // Tokenize the copied string
-    char *token = strtok(inputCopy, delimiter);
-    int count = 0;
-    while (token != NULL){
-        
-        if (token != NULL) {
-            strcpy(row, token);
-        token = strtok(NULL, delimiter);
-        count += 1;
-    }
-    strcpy(row, token);
-    }
-    // Free the duplicated string
-    free(inputCopy);
-    }
+    int MAX_row,MAX_col,start_pos_x,start_pos_y,end_pos_x,end_pos_y;
+    char map[MAX_SIZE][MAX_SIZE];
+} MAZE;
 
 /**
  * @brief Opens the file in the correct mode
@@ -75,21 +56,119 @@ int read_file(FILE *inputFile, char output[100][100])
 /**
  * @brief Checks that there was data for each part of each reading in the file
  *
- * @param DATA The array of data from the file
+ * @param MAZE The array of data from the file
  * @param Count The number of readings in the array
  * @return int Return 0 if there are no errors, 1 if you find an error.
  */
-int data_checker(MAZE_ROW *DATA, int count)
+int data_checker(MAZE *MAZE, int count)
 {
 	if (count == 0){
 		return 1;
 	}
     for(int i = 0; i< count; i++){
-        if (DATA[i].row == NULL){
+        if (MAZE->map[i] == NULL){
             return 1;
         }
     }
     return 0;
 }
 
+/**
+ * @brief Load the maze into the terminal with the player as P
+ *
+ * @param MAZE The array of data from the file and containing the len of the file and start/end positions
+ * @param Player_position The coordonates of Player at all times on the MAP
+ * @return int Return 0 if there are no errors
+ */
+int print_MAZE(MAZE *MAZE, Player_position Player)
+{
+    for (int row_index = 0; row_index < MAZE->MAX_row; row_index++)
+    {
+        for (int col_index = 0; col_index < MAZE->MAX_col; col_index++)
+        {
+            if (row_index == Player.x && col_index == Player.y){
+                printf("%s","P");
+            }
+            else{
+                printf("%c",MAZE->map[row_index][col_index]);
+            }
+            
+        }
+        
+    }
+    return 0;
+        
+}
+/**
+ * @brief Set the player position on the start
+ * @param MAZE The array of data from the file and 
+ * containing the len of the file and start/end positions
+ * @param Player_position The coordonates of Player at all times on the MAP
+ * @return int Return 0 if there are no errors
+ */
+void set_player_position(MAZE *MAZE, Player_position Player)
+{
+    Player.x = MAZE->start_pos_x;
+    Player.y = MAZE->start_pos_y;
+}
+/**
+ * @brief Find the start position in the file
+ * @param MAZE The array of data from the file and 
+ * containing the len of the file and start/end positions
+ * @return int Return 0 if there are no errors
+ */
+int find_start_postion(MAZE *MAZE){
+    int record_row_index,record_col_index;
+    for (int row_index = 0; row_index < MAZE->MAX_row; row_index++)
+    {
+        for (int col_index = 0; col_index < MAZE->MAX_col; col_index++)
+        {
+            if (MAZE->map[row_index][col_index] == "S") {
+                record_row_index = row_index;
+                record_col_index = col_index;
+            }          
+        }
+        
+    }
+    return record_row_index,record_col_index;
+}
+/**
+ * @brief Find the end position in the file
+ * @param MAZE The array of data from the file and 
+ * containing the len of the file and start/end positions
+ * @return int Return 0 if there are no errors
+ */
+int find_end_postion(MAZE *MAZE){
+    int record_row_index,record_col_index;
+    for (int row_index = 0; row_index < MAZE->MAX_row; row_index++)
+    {
+        for (int col_index = 0; col_index < MAZE->MAX_col; col_index++)
+        {
+            if (MAZE->map[row_index][col_index] == "E") {
+                record_row_index = row_index;
+                record_col_index = col_index;
+            }          
+        }
+        
+    }
+    return record_row_index,record_col_index;
+}
+/**
+ * @brief Set the player position on the start
+ * @param MAZE The array of data from the file and 
+ * containing the len of the file and start/end positions
+ * @param Player_position The coordonates of Player at all times on the MAP
+ * @return int Return 0 if there are no errors and return 1 if there is a error
+ */
+void set_player_position(MAZE *MAZE, Player_position Player,char input)
+{
+    if (input == "W"){
+        if (MAZE->map[Player.x+1][Player.y] == " "){
+            
+        }
+    }
+    return 1;
+    Player.x = MAZE->start_pos_x;
+    Player.y = MAZE->start_pos_y;
+}
 // #endif // FITNESS_DATA_STRUCT_H
