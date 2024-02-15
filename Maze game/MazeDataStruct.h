@@ -154,21 +154,38 @@ int find_end_postion(MAZE *MAZE){
     return record_row_index,record_col_index;
 }
 /**
- * @brief Set the player position on the start
+ * @brief Get input to move Player with WASD 
  * @param MAZE The array of data from the file and 
  * containing the len of the file and start/end positions
  * @param Player_position The coordonates of Player at all times on the MAP
  * @return int Return 0 if there are no errors and return 1 if there is a error
  */
-void set_player_position(MAZE *MAZE, Player_position Player,char input)
+void movePlayer(MAZE *MAZE, Player_position Player,char input)
 {
+    int recorded_x = Player.x,recorded_y = Player.y;
     if (input == "W"){
         if (MAZE->map[Player.x+1][Player.y] == " "){
-            
+                Player.x += 1;
         }
     }
-    return 1;
-    Player.x = MAZE->start_pos_x;
-    Player.y = MAZE->start_pos_y;
+    if (input == "S"){
+        if (MAZE->map[Player.x+1][Player.y] == " "){
+                Player.x -= 1;
+        }
+    }
+    if (input == "D"){
+        if (MAZE->map[Player.x+1][Player.y] == " "){
+                Player.y += 1;
+        }
+    }
+    if (input == "A"){
+        if (MAZE->map[Player.x+1][Player.y] == " "){
+                Player.y -= 1;
+        }
+    }
+    if (Player.x == recorded_x || Player.y == recorded_y){
+        return 1;
+    }
+    return 0;
 }
 // #endif // FITNESS_DATA_STRUCT_H
