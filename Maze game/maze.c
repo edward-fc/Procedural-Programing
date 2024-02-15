@@ -3,28 +3,28 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define MAX_SIZE 100
 
-int main(){
-    
-    char *filename = "maze.csv",output[100][100],maze[100][100];
-    FILE *file = open_file(filename,"r");
-    int count = read_file(file,output);
-    for (int row = 0; row < count; row++)
-    {
-        for (int col = 0; col < strlen(output[row]); col+=2)
-        {
-            if (("%c",output[row][col]) == "S")
-            {
-                printf("P");
-            }
-            else{
-                printf("%c",output[row][col]);
-            }
-            
-            // strcpy(*maze,&output[row][col]);
-            
-        
-        }
-    }
-    
+typedef struct{
+    int x, y;
+}Player_position;
+typedef struct {
+    int MAX_row,MAX_col,start_pos_x,start_pos_y,end_pos_x,end_pos_y;
+    char map[MAX_SIZE][MAX_SIZE];
+} MAZE;
+
+int main(char filename){
+    MAZE MAZE;
+    Player_position Player;
+    // Filename will be inserted by user
+    FILE *f = open_file(filename, "r");
+    // read the opened file which returns the len of the output
+    MAZE.MAX_row = read_file(f,MAZE.map);
+    fclose(f);
+    // find the length of the colum
+    MAZE.MAX_col = strlen(MAZE.map[0]);
+    //loop to find player start and end position 
+
+
+
 }
