@@ -1,6 +1,6 @@
 
-// #ifndef FITNESS_DATA_STRUCT_H
-// #define FITNESS_DATA_STRUCT_H
+// #ifndef MAZE_DATA_STRUCT_H
+// #define MAZE_DATA_STRUCT_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -123,7 +123,7 @@ int find_start_postion(MAZE MAZE){
     {
         for (int col_index = 0; col_index < MAZE.MAX_col; col_index++)
         {
-            if (MAZE.map[row_index][col_index] == "S") {
+            if (MAZE.map[row_index][col_index] == 'S') {
                 record_row_index = row_index;
                 record_col_index = col_index;
             }          
@@ -144,7 +144,7 @@ int find_end_postion(MAZE MAZE){
     {
         for (int col_index = 0; col_index < MAZE.MAX_col; col_index++)
         {
-            if (MAZE.map[row_index][col_index] == "E") {
+            if (MAZE.map[row_index][col_index] == 'E') {
                 record_row_index = row_index;
                 record_col_index = col_index;
             }          
@@ -163,30 +163,29 @@ int find_end_postion(MAZE MAZE){
 void movePlayer(MAZE MAZE, Player_position Player,char input)
 {
     int recorded_x = Player.x,recorded_y = Player.y;
-    if (input == "W"){
-        if (MAZE.map[Player.x+1][Player.y] == " "){
+    if (input == 'W'){
+        if (MAZE.map[Player.x+1][Player.y] == ' '){
                 Player.x += 1;
         }
     }
-    if (input == "S"){
-        if (MAZE.map[Player.x+1][Player.y] == " "){
+    if (input == 'S'){
+        if (MAZE.map[Player.x+1][Player.y] == ' '){
                 Player.x -= 1;
         }
     }
-    if (input == "D"){
-        if (MAZE.map[Player.x+1][Player.y] == " "){
+    if (input == 'D'){
+        if (MAZE.map[Player.x+1][Player.y] == ' '){
                 Player.y += 1;
         }
     }
-    if (input == "A"){
-        if (MAZE.map[Player.x+1][Player.y] == " "){
+    if (input == 'A'){
+        if (MAZE.map[Player.x+1][Player.y] == ' '){
                 Player.y -= 1;
         }
     }
     if (Player.x == recorded_x || Player.y == recorded_y){
-        return 1;
+        printf("Invalid move\n");
     }
-    return 0;
 }
 /**
  * @brief Check Win Condition then end the loop
@@ -195,7 +194,7 @@ void movePlayer(MAZE MAZE, Player_position Player,char input)
  * @param Player_position The coordonates of Player at all times on the MAP
  * @return int Return 0 ends the loop and return 1 there is an error or no win condition
  */
-void checkWinCondition(MAZE MAZE, Player_position Player)
+int checkWinCondition(MAZE MAZE, Player_position Player)
 {
     if (Player.x == MAZE.end_pos_x && Player.y == MAZE.end_pos_y)
     {
@@ -204,4 +203,4 @@ void checkWinCondition(MAZE MAZE, Player_position Player)
     return 1;
     
 }
-// #endif // FITNESS_DATA_STRUCT_H
+// #endif // MAZE_DATA_STRUCT_H
