@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_SIZE 100
+#define MAX_SIZE 101
 //define player
 typedef struct{
     int x, y;
@@ -37,15 +37,14 @@ FILE *open_file(char *filename, char *mode)
  * @param dataArray the array of readings
  * @return int Returns the number of readings from the file
  */
-int read_file(FILE *inputFile, char output[100][100])
+int read_file(FILE *inputFile, char output[101][101])
 {
 	//Initiation of variables
-    int buffer_size = 100,len=0,function_count=0;
+    int buffer_size = 200,len=0,function_count=0;
     
-    char line_buffer[buffer_size],delimiter = ',';
+    char line_buffer[buffer_size];
 
     while(fgets(line_buffer, buffer_size, inputFile) != NULL){
-        //strcpy(output,line_buffer);
         //grab the length of Data Steps   
         strcpy(output[function_count],line_buffer);
         function_count++;
