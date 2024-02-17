@@ -9,5 +9,6 @@ int main(){
     char filename[10];
     scanf(" %s", filename);
     open_file(filename,"r");
+    printf("sucess");
     return 0;
 }
