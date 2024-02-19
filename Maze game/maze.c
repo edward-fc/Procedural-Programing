@@ -33,9 +33,13 @@ int main(){
         print_MAZE(Maze,Player);
 
         printf("Move (WASD): ");
-        Player_position updated_player_movement = movePlayer(Maze,Player);
+        char move;
+        scanf(" %c", &move);
+        Player_position updated_player_movement = movePlayer(Maze,Player,move);
+        printf("%d %d\n",updated_player_movement.x,updated_player_movement.y);
         Player.x = updated_player_movement.x;
         Player.y = updated_player_movement.y;
+
         printf("%d %d\n",Player.x,Player.y);
         if (checkWinCondition(Maze,Player)){
             printf("Congratulations, you've found the end!\n");

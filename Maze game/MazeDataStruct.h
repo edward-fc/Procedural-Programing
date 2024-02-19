@@ -161,37 +161,40 @@ Player_position find_end_postion(MAZE MAZE){
  * @param Player_position The coordonates of Player at all times on the MAP
  * @return int Return 0 if there are no errors and return 1 if there is a error
  */
-Player_position movePlayer(MAZE MAZE, Player_position Player)
+Player_position movePlayer(MAZE MAZE, Player_position Player,char move)
 {
     Player_position updated_pos;
-    int recorded_x = Player.x,recorded_y = Player.y;
-    char move;
-    scanf(" %c", &move);
-    printf("%c\n",move);
+    updated_pos.x = Player.x;
+    updated_pos.y = Player.y;
     switch (move)
     {
     case 'W':
     case 'w':
-        if (MAZE.map[Player.x+1][Player.y] == ' '){
-                updated_pos.x = Player.y+1;
+        printf("%c",MAZE.map[Player.x-1][Player.y]);
+        if (MAZE.map[Player.x-1][Player.y] == ' ' || MAZE.map[Player.x-1][Player.y] == 'E'){
+                updated_pos.x = Player.x-1;
+                printf("W:%d",updated_pos.x);
         }
         break;
     case 'S':
     case 's':
-        if (MAZE.map[Player.x-1][Player.y] == ' '){
-                updated_pos.x = Player.x-1;
+        if (MAZE.map[Player.x+1][Player.y] == ' ' || MAZE.map[Player.x+1][Player.y] == 'E'){
+                updated_pos.x = Player.x+1;
+                printf("S:%d",updated_pos.x);
         }
         break;
     case 'D':
     case 'd':
-        if (MAZE.map[Player.x][Player.y+1] == ' '){
+        if (MAZE.map[Player.x][Player.y+1] == ' ' || MAZE.map[Player.x][Player.y+1] == 'E'){
                 updated_pos.y = Player.y+1;
+                printf("D:%d",updated_pos.y);
         }
         break;
     case 'A':
     case 'a':
-        if (MAZE.map[Player.x][Player.y-1] == ' '){
+        if (MAZE.map[Player.x][Player.y-1] == ' ' || MAZE.map[Player.x][Player.y-1] == 'E'){
                 updated_pos.y = Player.y-1;
+                printf("A:%d",updated_pos.y);
         }
         break;
     
