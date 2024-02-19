@@ -2,7 +2,7 @@
 import random
 maze=[]
 list_item = ["#"," ","S","E"]
-maze_row_index = 50
+maze_row_index = 100
 maze_col_index = 100
 for i in range(maze_row_index):
     row=[]
@@ -62,7 +62,7 @@ if end_point == "S":
 maze[start_point_row][start_point_col] = start_point_text
 maze[square_index[0]][square_index[1]] = end_point
 
-f = open("Maze game/maze3.csv", "w")
+f = open("Maze game/maze4.csv", "w")
 s=""
 for element in maze:
     for squares in element:

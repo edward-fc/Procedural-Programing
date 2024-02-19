@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_SIZE 101
+#define MAX_SIZE 200
 //define player
 typedef struct{
     int x, y;
@@ -37,10 +37,10 @@ FILE *open_file(char *filename, char *mode)
  * @param dataArray the array of readings
  * @return int Returns the number of readings from the file
  */
-int read_file(FILE *inputFile, char output[101][101])
+int read_file(FILE *inputFile, char output[MAX_SIZE][MAX_SIZE])
 {
 	//Initiation of variables
-    int buffer_size = 200,len=0,function_count=0;
+    int buffer_size = MAX_SIZE,len=0,function_count=0;
     
     char line_buffer[buffer_size];
 
@@ -64,12 +64,15 @@ int data_checker(MAZE MAZE, int count)
 	if (count == 0){
 		return 1;
 	}
+    int col_index = strlen(MAZE.map[0]);
     for(int i = 0; i< count; i++){
-        if (MAZE.map[i] == NULL){
+        printf("%d/",strlen(MAZE.map[i]));
+        if (MAZE.map[i] == NULL ){
+            //|| strlen(MAZE.map[i]) != col_index
             return 1;
         }
     }
-    return 0;
+    return col_index;
 }
 
 /**
@@ -170,31 +173,29 @@ Player_position movePlayer(MAZE MAZE, Player_position Player,char move)
     {
     case 'W':
     case 'w':
-        printf("%c",MAZE.map[Player.x-1][Player.y]);
+        
         if (MAZE.map[Player.x-1][Player.y] == ' ' || MAZE.map[Player.x-1][Player.y] == 'E'){
                 updated_pos.x = Player.x-1;
-                printf("W:%d",updated_pos.x);
         }
         break;
     case 'S':
     case 's':
         if (MAZE.map[Player.x+1][Player.y] == ' ' || MAZE.map[Player.x+1][Player.y] == 'E'){
                 updated_pos.x = Player.x+1;
-                printf("S:%d",updated_pos.x);
+
         }
         break;
     case 'D':
     case 'd':
         if (MAZE.map[Player.x][Player.y+1] == ' ' || MAZE.map[Player.x][Player.y+1] == 'E'){
                 updated_pos.y = Player.y+1;
-                printf("D:%d",updated_pos.y);
+
         }
         break;
     case 'A':
     case 'a':
         if (MAZE.map[Player.x][Player.y-1] == ' ' || MAZE.map[Player.x][Player.y-1] == 'E'){
                 updated_pos.y = Player.y-1;
-                printf("A:%d",updated_pos.y);
         }
         break;
     

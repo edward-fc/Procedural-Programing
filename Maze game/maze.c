@@ -6,13 +6,14 @@
 int main(){
     MAZE Maze;
     // Filename
-    char filename[20] = "maze.csv";
+    char filename[20] = "maze1.csv";
     FILE *f = open_file(filename, "r");
     // read the opened file which returns the len of the output
     Maze.MAX_row = read_file(f,Maze.map);
     fclose(f);
     // // find the length of the colum
-    Maze.MAX_col = strlen(Maze.map[0]);
+    Maze.MAX_col = data_checker(Maze,Maze.MAX_row);
+    printf("%d\n",Maze.MAX_col);
     //set start/end point
     //create a struct to store the coordanates then assigne them to the maze
     Player_position start_coor = find_start_postion(Maze);
@@ -27,7 +28,7 @@ int main(){
     Player_position  Player = set_player_position(Maze);
     printf("%d %d\n",Player.x,Player.y);
     //loop to find player start and end position 
-    int Game_State = 1;
+    int Game_State = 1, nb_move = 0;
     while (Game_State)
     {
         print_MAZE(Maze,Player);
@@ -41,10 +42,12 @@ int main(){
         Player.y = updated_player_movement.y;
 
         printf("%d %d\n",Player.x,Player.y);
+        nb_move++;  
         if (checkWinCondition(Maze,Player)){
-            printf("Congratulations, you've found the end!\n");
+            printf("Congratulations, you've found the end! You did it in only %d\n",nb_move);
             Game_State = 0;
-        }        
+        }
+              
     }
     return 0;
 }

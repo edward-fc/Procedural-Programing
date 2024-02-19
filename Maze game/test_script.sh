@@ -1,169 +1,90 @@
-# Compile and RUN the MAZE script
-gcc maze.c -o maze
 
 # Initialize counters
 total_tests=0
 passed_tests=0
 
-# Test the open_file function for 4 different files
-#First test for 10x10
-echo "Test the function open and read for maze 10x10"
-#compile the test
-gcc test_open_file.c -o test_open_file
-filename1="maze.csv"
-let total_tests+=1
-output=$(echo $filename1 | ./test_open_file)
-# Capture the exit status
-exit_status=$?
-#check the exit status
-if [ $exit_status -eq 0 ]; then
-    echo "The program opened the file sucessfully for $filename1"
-    let passed_tests+=1
-else
-    echo "during opening, Something when wrong with the exit status: $exit_status"
-fi
+open_file_test() {
+    # Test the open_file function
+    echo "Test the function open: $1"
+    #compile the test
+    gcc test_open_file.c -o test_open_file
+    filename1="$2"
+    let total_tests+=1
+    output=$(echo $filename1 | ./test_open_file)
+    # Capture the exit status
+    exit_status=$?
+    #check the exit status
+    if [ $exit_status -eq 0 ]; then
+        echo "The program opened the file sucessfully for $filename1"
+        let passed_tests+=1
+    else
+        echo "during opening, Something when wrong with the exit status: $exit_status"
+    fi
+}
 
-# Test the read_file function with correct number of row (answer expected 10)
-gcc test_read_file.c -o test_read_file
-let total_tests+=1
-output=$(echo $filename1 | ./test_read_file)
-#get the exit status
-exit_status=$?
-#check the exit status
-if [ $exit_status -eq 10 ]; then
-    echo "The program readed the file sucessfully for $filename1"
-    let passed_tests+=1
-else
-    echo "During reading, Something when wrong with the exit status: $exit_status"
-fi
+read_file_test() {
+    # Test the read_file function with correct number of row
+    gcc test_read_file.c -o test_read_file
+    let total_tests+=1
+    filename1="$1"
+    output=$(echo $filename1 | ./test_read_file)
+    #get the exit status
+    exit_status=$?
+    #check the exit status
+    if [ $exit_status -eq $2 ]; then
+        echo "The program readed the file sucessfully for $filename1"
+        let passed_tests+=1
+    else
+        echo "During reading, Something when wrong with the exit status: $exit_status"
+    fi
+}
 
-echo //
+data_checker_test() {
+    #Test the function int data_checker(MAZE MAZE, int count) in MazeDataStruct.h
 
-#Second test for maze 10x20
-echo "Test the function open and read for maze 10x20"
-gcc test_open_file.c -o test_open_file
-filename1="maze1.csv"
-let total_tests+=1
-output=$(echo $filename1 | ./test_open_file)
-# Capture the exit status
-exit_status=$?
-#check the exit status
-if [ $exit_status -eq 0 ]; then
-    echo "The program opened the file sucessfully for $filename1"
-    let passed_tests+=1
-else
-    echo "During opening, Something when wrong with the exit status: $exit_status"
-fi
+    gcc test_data_check.c -o test_data_check
+    let total_tests+=1
+    filename1="$1"
+    output=$(echo $filename1 | ./test_data_check)
+    #get the exit status
+    exit_status=$?
+    #check the exit status
+    if [ $exit_status -eq $2 ]; then
+        echo "The file data is sucessfully extracted from the file $filename1"
+        let passed_tests+=1
+    else
+        echo "During data check, Something when wrong with the exit status: $exit_status and the output $output"
+    fi
+}
 
-# Test the read_file function with correct number of row (answer expected 10)
-gcc test_read_file.c -o test_read_file
-let total_tests+=1
-output=$(echo $filename1 | ./test_read_file)
-#get the exit status
-exit_status=$?
-#check the exit status
-if [ $exit_status -eq 10 ]; then
-    echo "The program readed the file sucessfully for $filename1"
-    let passed_tests+=1
-else
-    echo "During reading, Something when wrong with the exit status: $exit_status"
-fi
+
+open_file_test "10x10" "maze.csv"
+read_file_test "maze.csv" 10
+data_checker_test "maze.csv" 10
 
 echo //
 
-#Third test for maze 30x60
-echo "Test the function open and read for maze 30x60"
-gcc test_open_file.c -o test_open_file
-filename1="maze2.csv"
-let total_tests+=1
-output=$(echo $filename1 | ./test_open_file)
-# Capture the exit status
-exit_status=$?
-#check the exit status
-if [ $exit_status -eq 0 ]; then
-    echo "The program opened the file sucessfully for $filename1"
-    let passed_tests+=1
-else
-    echo "During opening, Something when wrong with the exit status: $exit_status"
-fi
-
-# Test the read_file function with correct number of row (answer expected 30)
-gcc test_read_file.c -o test_read_file
-let total_tests+=1
-output=$(echo $filename1 | ./test_read_file)
-#get the exit status
-exit_status=$?
-#check the exit status
-if [ $exit_status -eq 30 ]; then
-    echo "The program readed the file sucessfully for $filename1"
-    let passed_tests+=1
-else
-    echo "During reading, Something when wrong with the exit status: $exit_status"
-fi
+open_file_test "10x20" "maze1.csv"
+read_file_test "maze1.csv" 10
+data_checker_test "maze1.csv" 20
 
 echo //
 
-#Fourth test for maze 50x100
-echo "Test the function open and read for maze 50x100"
-gcc test_open_file.c -o test_open_file
-filename1="maze3.csv"
-let total_tests+=1
-output=$(echo $filename1 | ./test_open_file)
-# Capture the exit status
-exit_status=$?
-#check the exit status
-if [ $exit_status -eq 0 ]; then
-    echo "The program opened the file sucessfully for $filename1"
-    let passed_tests+=1
-else
-    echo "During opening, Something when wrong with the exit status: $exit_status"
-fi
-
-# Test the read_file function with correct number of row (answer expected 10)
-gcc test_read_file.c -o test_read_file
-let total_tests+=1
-output=$(echo $filename1 | ./test_read_file)
-#get the exit status
-exit_status=$?
-#check the exit status
-if [ $exit_status -eq 50 ]; then
-    echo "The program readed the file sucessfully for $filename1"
-    let passed_tests+=1
-else
-    echo "During reading, Something when wrong with the exit status: $exit_status"
-fi
+open_file_test "30x60" "maze2.csv"
+read_file_test "maze2.csv" 30
+data_checker_test "maze2.csv" 60
 
 echo //
 
-#5 test for maze 100x100
-echo "Test the function open and read for maze 100x100"
-gcc test_open_file.c -o test_open_file
-filename1="maze4.csv"
-let total_tests+=1
-output=$(echo $filename1 | ./test_open_file)
-# Capture the exit status
-exit_status=$?
-#check the exit status
-if [ $exit_status -eq 0 ]; then
-    echo "The program opened the file sucessfully for $filename1"
-    let passed_tests+=1
-else
-    echo "During opening, Something when wrong with the exit status: $exit_status"
-fi
+open_file_test "50x100" "maze3.csv"
+read_file_test "maze3.csv" 50
+data_checker_test "maze3.csv" 100
 
-# Test the read_file function with correct number of row (answer expected 10)
-gcc test_read_file.c -o test_read_file
-let total_tests+=1
-output=$(echo $filename1 | ./test_read_file)
-#get the exit status
-exit_status=$?
-#check the exit status
-if [ $exit_status -eq 100 ]; then
-    echo "The program readed the file sucessfully for $filename1"
-    let passed_tests+=1
-else
-    echo "During reading, Something when wrong with the exit status: $exit_status"
-fi
+echo //
+
+open_file_test "100x100" "maze4.csv"
+read_file_test "maze4.csv" 100
+data_checker_test "maze4.csv" 100
 
 # Report results
 echo "$passed_tests/$total_tests tests were successful."
