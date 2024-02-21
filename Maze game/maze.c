@@ -6,7 +6,8 @@
 int main(){
     MAZE Maze;
     // Filename
-    char filename[20] = "maze2.csv";
+
+    char filename[20] = "maze1.csv";
     FILE *f = open_file(filename, "r");
     // read the opened file which returns the len of the output
     Maze.MAX_row = read_file(f,Maze.map);
@@ -40,6 +41,7 @@ int main(){
             case 'E':
             case 'e':
                 Game_State=0;
+                return 1;
                 break;
             case 'M':
             case 'n':
