@@ -6,7 +6,7 @@
 int main(){
     MAZE Maze;
     // Filename
-    char filename[20] = "maze1.csv";
+    char filename[20] = "maze2.csv";
     FILE *f = open_file(filename, "r");
     // read the opened file which returns the len of the output
     Maze.MAX_row = read_file(f,Maze.map);
@@ -31,17 +31,26 @@ int main(){
     int Game_State = 1, nb_move = 0;
     while (Game_State)
     {
-        print_MAZE(Maze,Player);
-
-        printf("Move (WASD): ");
+        printf("Move (WASD) or Access the Map (M) or Exit (E): ");
         char move;
         scanf(" %c", &move);
+        
+        switch (move)
+        {
+            case 'E':
+            case 'e':
+                Game_State=0;
+                break;
+            case 'M':
+            case 'n':
+                print_MAZE(Maze,Player);
+                break;
+        }
+
         Player_position updated_player_movement = movePlayer(Maze,Player,move);
-        printf("%d %d\n",updated_player_movement.x,updated_player_movement.y);
         Player.x = updated_player_movement.x;
         Player.y = updated_player_movement.y;
 
-        printf("%d %d\n",Player.x,Player.y);
         nb_move++;  
         if (checkWinCondition(Maze,Player)){
             printf("Congratulations, you've found the end! You did it in only %d\n",nb_move);

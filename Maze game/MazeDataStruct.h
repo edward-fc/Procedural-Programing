@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_SIZE 200
+#define MAX_SIZE 102
 //define player
 typedef struct{
     int x, y;
@@ -66,12 +66,11 @@ int data_checker(MAZE MAZE, int count)
 	}
     int col_index = strlen(MAZE.map[0]);
     for(int i = 0; i< count; i++){
-        printf("%d/",strlen(MAZE.map[i]));
-        if (MAZE.map[i] == NULL ){
-            //|| strlen(MAZE.map[i]) != col_index
+        if (MAZE.map[i] == NULL || strlen(MAZE.map[i]) != col_index){
             return 1;
         }
     }
+    printf("%d",col_index);
     return col_index;
 }
 
@@ -198,7 +197,11 @@ Player_position movePlayer(MAZE MAZE, Player_position Player,char move)
                 updated_pos.y = Player.y-1;
         }
         break;
-    
+    case 'E':
+    case 'e':
+    case 'M':
+    case 'm':
+        break;
     default:
         printf("Invalid move\n");
         break;

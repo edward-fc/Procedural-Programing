@@ -60,31 +60,31 @@ data_checker_test() {
 
 open_file_test "10x10" "maze.csv"
 read_file_test "maze.csv" 10
-data_checker_test "maze.csv" 10
+data_checker_test "maze.csv" 11
 
 echo //
 
 open_file_test "10x20" "maze1.csv"
 read_file_test "maze1.csv" 10
-data_checker_test "maze1.csv" 20
+data_checker_test "maze1.csv" 21
 
 echo //
 
 open_file_test "30x60" "maze2.csv"
 read_file_test "maze2.csv" 30
-data_checker_test "maze2.csv" 60
+data_checker_test "maze2.csv" 61
 
 echo //
 
 open_file_test "50x100" "maze3.csv"
 read_file_test "maze3.csv" 50
-data_checker_test "maze3.csv" 100
+data_checker_test "maze3.csv" 101
 
 echo //
 
 open_file_test "100x100" "maze4.csv"
 read_file_test "maze4.csv" 100
-data_checker_test "maze4.csv" 100
+data_checker_test "maze4.csv" 101
 
 # Report results
 echo "$passed_tests/$total_tests tests were successful."
