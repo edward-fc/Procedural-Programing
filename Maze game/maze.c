@@ -6,33 +6,31 @@
 int main(){
     MAZE Maze;
     // Filename
-    char choose_map,filename[20];
+    char choose_map,*filename;;
     printf("Choose map (1,2,3,4,5)");
     scanf(" %c",&choose_map);
     switch (choose_map){
         case '1':
-            strcpy(filename,"maze.csv");
+            filename = "maze.csv";
             break;
         case '2':
-            char *filename = "maze1.csv";
+            filename = "maze1.csv";
             break;
         case '3':
-            filename[20] = "maze2.csv";
+            filename = "maze2.csv";
             break;
         case '4':
-            filename[20] = "maze3.csv";
+            filename = "maze3.csv";
             break;
         case '5':
-            filename[20] = "maze4.csv";
+            filename = "maze4.csv";
             break;
     }
-    if (filename != NULL)
+    if (filename == NULL)
     {
         return 1;
     }
-    char filename1[20];
-    strcpy(filename1,&filename);
-    FILE *f = open_file(filename1, "r");
+    FILE *f = open_file(filename, "r");
     // read the opened file which returns the len of the output
     Maze.MAX_row = read_file(f,Maze.map);
     fclose(f);
@@ -54,6 +52,7 @@ int main(){
     printf("%d %d\n",Player.x,Player.y);
     //loop to find player start and end position 
     int Game_State = 1, nb_move = 0;
+
     while (Game_State)
     {
         printf("Move (WASD) or Access the Map (M) or Exit (E): ");
@@ -68,11 +67,11 @@ int main(){
                 return 1;
                 break;
             case 'M':
-            case 'n':
+            case 'm':
                 print_MAZE(Maze,Player);
                 break;
         }
-
+        
         Player_position updated_player_movement = movePlayer(Maze,Player,move);
         Player.x = updated_player_movement.x;
         Player.y = updated_player_movement.y;
@@ -82,7 +81,10 @@ int main(){
             printf("Congratulations, you've found the end! You did it in only %d\n",nb_move);
             Game_State = 0;
         }
-              
+        if (nb_move > 200){
+            Game_State = 0;
+        }
     }
+
     return 0;
 }

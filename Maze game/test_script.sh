@@ -57,13 +57,18 @@ data_checker_test() {
     fi
 }
 complete_maze() {
+    #update the total number of test run
+    let total_tests+=1
+
     # compile and run maze.c
     gcc maze.c -o maze
-    filename1 = "$1"
     executable="./maze"
 
-    # Read instructions from file and remove commas
-    instructions=$(cat instructions.txt | tr -d ',')
+    #initialise the line number from the instruction 
+    line_number="$1"
+
+    # read instructions from file and remove comma
+    instructions=$(sed -n "${line_number}p" instructions.txt | tr -d ',')
     echo $instructions
 
     # Feed instructions to the executable one by one
@@ -73,7 +78,7 @@ complete_maze() {
     done | $executable
     #get exit status
     exit_status=$?
-    echo $exit_status
+
     if [ $exit_status -eq 0 ]; then
         echo "Sucessful completed the maze."
         let passed_tests+=1
@@ -86,32 +91,36 @@ complete_maze() {
 open_file_test "10x10" "maze.csv"
 read_file_test "maze.csv" 10
 data_checker_test "maze.csv" 11
+complete_maze 1
 
 echo //
 
 open_file_test "10x20" "maze1.csv"
 read_file_test "maze1.csv" 10
 data_checker_test "maze1.csv" 21
+complete_maze 2
 
 echo //
 
 open_file_test "30x60" "maze2.csv"
 read_file_test "maze2.csv" 30
 data_checker_test "maze2.csv" 61
+complete_maze 3
 
 echo //
 
 open_file_test "50x100" "maze3.csv"
 read_file_test "maze3.csv" 50
 data_checker_test "maze3.csv" 101
+complete_maze 4
 
 echo //
 
 open_file_test "100x100" "maze4.csv"
 read_file_test "maze4.csv" 100
 data_checker_test "maze4.csv" 101
+complete_maze 5
+
 
 # Report results
 echo "$passed_tests/$total_tests tests were successful."
-
-complete_maze "maze1.csv"
