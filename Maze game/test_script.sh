@@ -56,6 +56,31 @@ data_checker_test() {
         echo "During data check, Something when wrong with the exit status: $exit_status and the output $output"
     fi
 }
+complete_maze() {
+    # compile and run maze.c
+    gcc maze.c -o maze
+    filename1 = "$1"
+    executable="./maze"
+
+    # Read instructions from file and remove commas
+    instructions=$(cat instructions.txt | tr -d ',')
+    echo $instructions
+
+    # Feed instructions to the executable one by one
+    for (( i=0; i<${#instructions}; i++ )); do
+        echo "${instructions:$i:1}"
+    #execute the program
+    done | $executable
+    #get exit status
+    exit_status=$?
+    echo $exit_status
+    if [ $exit_status -eq 0 ]; then
+        echo "Sucessful completed the maze."
+        let passed_tests+=1
+    else
+        echo "During maze, Something when wrong with the exit status: $exit_status must be wrong maze file or wrong instructions"
+    fi
+}
 
 
 open_file_test "10x10" "maze.csv"
@@ -88,29 +113,5 @@ data_checker_test "maze4.csv" 101
 
 # Report results
 echo "$passed_tests/$total_tests tests were successful."
-complete_maze() {
-    # compile and run maze.c
-    gcc maze.c -o maze
-    filename1 = "$1"
-    executable="./maze"
 
-    # Read instructions from file and remove commas
-    instructions=$(cat instructions.txt | tr -d ',')
-    echo $instructions
-
-    # Feed instructions to the executable one by one
-    for (( i=0; i<${#instructions}; i++ )); do
-        echo "${instructions:$i:1}"
-    #execute the program
-    done | $executable
-    #get exit status
-    exit_status=$?
-    echo $exit_status
-    if [ $exit_status -eq 0 ]; then
-        echo "Sucessful completed the maze."
-        let passed_tests+=1
-    else
-        echo "During maze, Something when wrong with the exit status: $exit_status must be wrong maze file or wrong instructions"
-    fi
-}
 complete_maze "maze1.csv"

@@ -1,1 +1,5 @@
-W, D, W, W, A, W, A, W, W, W, D, D, D, D, D, E
+1, W, W, W, W, W, W, D, D, W
+2, W, D, W, W, A, W, A, W, W, W, D, D, D, D, D, E
+3,
+4, W, W, D, D, W, W, D, D, D, D, D, D, D, D, D, D, D, D, W, W, W, D, W, W, W, W, W, A, W, W, W, W, W, W, W, W, W, W, W, W, W, A, W, A, W, W, W, W, W, W, W, W, W, W, W, A, A, A, A, A, W, W, W, W, W, W, W, W, W, W, D, D, D, D, D, D, D, W
+5,

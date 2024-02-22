@@ -6,9 +6,33 @@
 int main(){
     MAZE Maze;
     // Filename
-
-    char filename[20] = "maze1.csv";
-    FILE *f = open_file(filename, "r");
+    char choose_map,filename[20];
+    printf("Choose map (1,2,3,4,5)");
+    scanf(" %c",&choose_map);
+    switch (choose_map){
+        case '1':
+            strcpy(filename,"maze.csv");
+            break;
+        case '2':
+            char *filename = "maze1.csv";
+            break;
+        case '3':
+            filename[20] = "maze2.csv";
+            break;
+        case '4':
+            filename[20] = "maze3.csv";
+            break;
+        case '5':
+            filename[20] = "maze4.csv";
+            break;
+    }
+    if (filename != NULL)
+    {
+        return 1;
+    }
+    char filename1[20];
+    strcpy(filename1,&filename);
+    FILE *f = open_file(filename1, "r");
     // read the opened file which returns the len of the output
     Maze.MAX_row = read_file(f,Maze.map);
     fclose(f);
