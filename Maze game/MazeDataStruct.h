@@ -70,7 +70,6 @@ int data_checker(MAZE MAZE, int count)
             return 1;
         }
     }
-    printf("%d",col_index);
     return col_index;
 }
 
@@ -115,13 +114,15 @@ Player_position set_player_position(MAZE MAZE)
     return player_position;
 }
 /**
- * @brief Find the start position in the file
+ * @brief Find the start position in the file if not returns 0,0
  * @param MAZE The array of data from the file and 
  * containing the len of the file and start/end positions
- * @return int Return 0 if there are no errors
+ * @return Return start_position coordanates if there are no errors
  */
 Player_position find_start_postion(MAZE MAZE){
     Player_position start_coordanates;
+    start_coordanates.x = 0;
+    start_coordanates.y = 0;
     for (int row_index = 0; row_index < MAZE.MAX_row; row_index++)
     {
         for (int col_index = 0; col_index < MAZE.MAX_col; col_index++)
@@ -136,13 +137,15 @@ Player_position find_start_postion(MAZE MAZE){
     return start_coordanates;
 }
 /**
- * @brief Find the end position in the file
+ * @brief Find the end position in the file and if not returns 0,0
  * @param MAZE The array of data from the file and 
  * containing the len of the file and start/end positions
- * @return int Return 0 if there are no errors
+ * @return Return end_position coordanates if there are no errors
  */
 Player_position find_end_postion(MAZE MAZE){
     Player_position end_coordanates;
+    end_coordanates.x = 0;
+    end_coordanates.y = 0;
     for (int row_index = 0; row_index < MAZE.MAX_row; row_index++)
     {
         for (int col_index = 0; col_index < MAZE.MAX_col; col_index++)

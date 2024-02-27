@@ -5,10 +5,11 @@
 
 int main(){
     MAZE Maze;
-    // Filename
+    // need a system to change the map
     char choose_map,*filename;;
     printf("Choose map (1,2,3,4,5)");
     scanf(" %c",&choose_map);
+    //create a switch to choose the different map
     switch (choose_map){
         case '1':
             filename = "maze.csv";
@@ -26,6 +27,7 @@ int main(){
             filename = "maze4.csv";
             break;
     }
+    //checking if map was selected
     if (filename == NULL)
     {
         return 1;
@@ -40,10 +42,18 @@ int main(){
     //set start/end point
     //create a struct to store the coordanates then assigne them to the maze
     Player_position start_coor = find_start_postion(Maze);
+    // Checking if start postition was found
+    if (start_coor.x == 0 || start_coor.y == 0){
+        return 1;
+    }
     Maze.start_pos_x = start_coor.x;
     Maze.start_pos_y = start_coor.y;
 
     Player_position end_coor = find_end_postion(Maze);
+    // Checking if end postition was found
+    if (start_coor.x == 0 || start_coor.y == 0){
+        return 1;
+    }
     Maze.end_pos_x = end_coor.x;
     Maze.end_pos_y = end_coor.y;
 
@@ -58,7 +68,7 @@ int main(){
         printf("Move (WASD) or Access the Map (M) or Exit (E): ");
         char move;
         scanf(" %c", &move);
-        
+        // switch function to show map or end game
         switch (move)
         {
             case 'E':
