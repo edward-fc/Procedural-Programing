@@ -6,49 +6,33 @@
 int main(){
     MAZE Maze;
     // need a system to change the map
-    char choose_map,*filename;;
-    printf("Choose map (1,2,3,4,5)");
-    scanf(" %c",&choose_map);
-    //create a switch to choose the different map
-    switch (choose_map){
-        case '1':
-            filename = "maze.csv";
-            break;
-        case '2':
-            filename = "maze1.csv";
-            break;
-        case '3':
-            filename = "maze2.csv";
-            break;
-        case '4':
-            filename = "maze3.csv";
-            break;
-        case '5':
-            filename = "maze4.csv";
-            break;
-    }
+    char filename;;
+    printf("Insert maze filename:");
+    scanf(" %s",&filename);
     //checking if map was selected
-    if (filename == NULL)
+    if (&filename == NULL)
     {
+        printf("cant find file");
         return 1;
     }
-    FILE *f = open_file(filename, "r");
+    FILE *f = open_file(&filename, "r");
     // read the opened file which returns the len of the output
     Maze.MAX_row = read_file(f,Maze.map);
     fclose(f);
     // // find the length of the colum
     Maze.MAX_col = data_checker(Maze,Maze.MAX_row);
-    printf("%d\n",Maze.MAX_col);
     //set start/end point
     //create a struct to store the coordanates then assigne them to the maze
+    
     Player_position start_coor = find_start_postion(Maze);
+    printf("%d %d",start_coor.x,start_coor.y);
     // Checking if start postition was found
     if (start_coor.x == 0 || start_coor.y == 0){
         return 1;
     }
     Maze.start_pos_x = start_coor.x;
     Maze.start_pos_y = start_coor.y;
-
+    printf("\n\n");
     Player_position end_coor = find_end_postion(Maze);
     // Checking if end postition was found
     if (start_coor.x == 0 || start_coor.y == 0){
@@ -61,13 +45,14 @@ int main(){
     Player_position  Player = set_player_position(Maze);
     printf("%d %d\n",Player.x,Player.y);
     //loop to find player start and end position 
-    int Game_State = 1, nb_move = 0;
+    int Game_State = 1;
 
     while (Game_State)
     {
         printf("Move (WASD) or Access the Map (M) or Exit (E): ");
         char move;
         scanf(" %c", &move);
+        
         // switch function to show map or end game
         switch (move)
         {
@@ -81,17 +66,13 @@ int main(){
                 print_MAZE(Maze,Player);
                 break;
         }
-        
+        //Update Player movement        
         Player_position updated_player_movement = movePlayer(Maze,Player,move);
         Player.x = updated_player_movement.x;
         Player.y = updated_player_movement.y;
-
-        nb_move++;  
+        // Check if the Wincondition has been met
         if (checkWinCondition(Maze,Player)){
-            printf("Congratulations, you've found the end! You did it in only %d\n",nb_move);
-            Game_State = 0;
-        }
-        if (nb_move > 200){
+            printf("Congratulations, you've found the end!");
             Game_State = 0;
         }
     }

@@ -1,4 +1,4 @@
-#include "MazeDataStruct.h"
+#include "../MazeDataStruct.h"
 /*
 This is the test script to test the function find_start_position
 If the segmentation core dump

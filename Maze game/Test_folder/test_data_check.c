@@ -1,6 +1,6 @@
-#include "MazeDataStruct.h"
+#include "../MazeDataStruct.h"
 /*
-This is the test script to test the function read_file
+This is the test script to test the function data_checker
 If the segmentation core dump
 The bash will detect and it will fail
 If the code returns 0
@@ -12,5 +12,6 @@ int main(){
     scanf(" %s",filename);
     FILE *f = open_file(filename,"r");
     int count = read_file(f,maze.map);
-    return count;
+    int col_index = data_checker(maze,count);
+    return col_index;
 }

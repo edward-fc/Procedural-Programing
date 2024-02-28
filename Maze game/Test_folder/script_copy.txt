@@ -1,0 +1,5 @@
+../test_data/maze.csv , E
+../test_data/maze1.csv , E
+../test_data/maze2.csv , E
+../test_data/maze3.csv , E
+../test_data/maze4.csv , E

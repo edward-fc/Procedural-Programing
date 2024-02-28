@@ -87,7 +87,7 @@ int print_MAZE(MAZE MAZE, Player_position Player)
         for (int col_index = 0; col_index < MAZE.MAX_col; col_index++)
         {
             if (row_index == Player.x && col_index == Player.y){
-                printf("%s","P");
+                printf("%s","X");
             }
             else{
                 printf("%c",MAZE.map[row_index][col_index]);

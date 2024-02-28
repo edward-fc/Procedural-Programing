@@ -14,7 +14,7 @@ open_file_test() {
     # Capture the exit status
     exit_status=$?
     #check the exit status
-    if [ $exit_status -eq 0 ]; then
+    if [ $exit_status == 0 ]; then
         echo "The program opened the file sucessfully for $filename1"
         let passed_tests+=1
     else
@@ -31,7 +31,7 @@ read_file_test() {
     #get the exit status
     exit_status=$?
     #check the exit status
-    if [ $exit_status -eq $2 ]; then
+    if [ $exit_status == $2 ]; then
         echo "The program readed the file sucessfully for $filename1"
         let passed_tests+=1
     else
@@ -49,7 +49,7 @@ data_checker_test() {
     #get the exit status
     exit_status=$?
     #check the exit status
-    if [ $exit_status -eq $2 ]; then
+    if [ $exit_status == $2 ]; then
         echo "The file data is sucessfully extracted from the file $filename1"
         let passed_tests+=1
     else
@@ -97,25 +97,26 @@ complete_maze() {
     let total_tests+=1
 
     # compile and run maze.c
-    gcc maze.c -o maze
-    executable="./maze"
+    gcc ../maze.c -o ../maze
+    executable=".././maze"
 
     #initialise the line number from the instruction 
     line_number="$1"
 
     # read instructions from file and remove comma
-    instructions=$(sed -n "${line_number}p" instructions.txt | tr -d ',')
-    #echo $instructions
+    instructions=$(sed -n "${line_number}p" script.txt | tr -d ',')
+    echo $instructions
 
     # Feed instructions to the executable one by one
     for (( i=0; i<${#instructions}; i++ )); do
         echo "${instructions:$i:1}"
     #execute the program
-    done | $executable >/dev/null 2>&1
+    # the /dev/null 2>&1 was found by https://www.squash.io/preventing-terminal-print-from-bash-scripts-in-linux/#:~:text=Running%20a%20Bash%20Script%20in%20Silent%20Mode,-Running%20a%20bash&text=the%20null%20device.-,The%20%E2%80%9C%3E%20%2Fdev%2Fnull%202%3E%261%E2%80%9D%20syntax,error%20messages%20in%20the%20terminal.
+    done | $executable #>/dev/null 2>&1
     #get exit status
     exit_status=$?
 
-    if [ $exit_status -eq 0 ]; then
+    if [ $exit_status == 0 ]; then
         echo "Sucessful completed the maze."
         let passed_tests+=1
     else
@@ -124,47 +125,47 @@ complete_maze() {
 }
 
 
-open_file_test "10x10" "maze.csv"
-read_file_test "maze.csv" 10
-data_checker_test "maze.csv" 11
-find_end_position_test "maze.csv" "1,7"
-find_start_position_test "maze.csv" "8,5"
+open_file_test "10x10" "../test_data/maze.csv"
+read_file_test "../test_data/maze.csv" 10
+data_checker_test "../test_data/maze.csv" 11
+find_end_position_test "../test_data/maze.csv" "1,7"
+find_start_position_test "../test_data/maze.csv" "8,5"
 complete_maze 1
 
 echo //
 
-open_file_test "10x20" "maze1.csv"
-read_file_test "maze1.csv" 10
-data_checker_test "maze1.csv" 21
-find_end_position_test "maze1.csv" "1,18"
-find_start_position_test "maze1.csv" "8,14"
+open_file_test "10x20" "../test_data/maze1.csv"
+read_file_test "../test_data/maze1.csv" 10
+data_checker_test "../test_data/maze1.csv" 21
+find_end_position_test "../test_data/maze1.csv" "1,18"
+find_start_position_test "../test_data/maze1.csv" "8,14"
 complete_maze 2
 
 echo //
 
-open_file_test "30x60" "maze2.csv"
-read_file_test "maze2.csv" 30
-data_checker_test "maze2.csv" 61
-find_end_position_test "maze2.csv" "28,27"
-find_start_position_test "maze2.csv" "1,20"
+open_file_test "30x60" "../test_data/maze2.csv"
+read_file_test "../test_data/maze2.csv" 30
+data_checker_test "../test_data/maze2.csv" 61
+find_end_position_test "../test_data/maze2.csv" "28,27"
+find_start_position_test "../test_data/maze2.csv" "1,20"
 complete_maze 3
 
 echo //
 
-open_file_test "50x100" "maze3.csv"
-read_file_test "maze3.csv" 50
-data_checker_test "maze3.csv" 101
-find_end_position_test "maze3.csv" "1,57"
-find_start_position_test "maze3.csv" "48,43"
+open_file_test "50x100" "../test_data/maze3.csv"
+read_file_test "../test_data/maze3.csv" 50
+data_checker_test "../test_data/maze3.csv" 101
+find_end_position_test "../test_data/maze3.csv" "1,57"
+find_start_position_test "../test_data/maze3.csv" "48,43"
 complete_maze 4
 
 echo //
 
-open_file_test "100x100" "maze4.csv"
-read_file_test "maze4.csv" 100
-data_checker_test "maze4.csv" 101
-find_end_position_test "maze4.csv" "37,98"
-find_start_position_test "maze4.csv" "92,1"
+open_file_test "100x100" "../test_data/maze4.csv"
+read_file_test "../test_data/maze4.csv" 100
+data_checker_test "../test_data/maze4.csv" 101
+find_end_position_test "../test_data/maze4.csv" "37,98"
+find_start_position_test "../test_data/maze4.csv" "92,1"
 complete_maze 5
 
 echo //

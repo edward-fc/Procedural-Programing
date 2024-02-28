@@ -1,5 +1,0 @@
-1, W, W, W, W, W, W, D, D, W
-2, W, D, W, W, A, W, A, W, W, W, D, D, D, D, D, E
-3, S, S, S, S, S, S, S, S, S, D, D, D, D, D, D, S, S, S, S, S, S, D, S, D, D, D, S, S, S, A, S, S, S, S, S, S, A, A, S, S
-4, W, W, D, D, W, W, D, D, D, D, D, D, D, D, D, D, D, D, W, W, W, D, W, W, W, W, W, A, W, W, W, W, W, W, W, W, W, W, W, W, W, A, W, A, W, W, W, W, W, W, W, W, W, A, A, A, A, A, W, W, W, W, W, W, W, W, W, W, W, D, D, D, D, D, D, D, W
-5, W, W, W, W, W, W, W, W, W, W, W, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, W, D, D, D, D, D, D, D, W, W, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, W, W, D, W, D, D, D, D, D, W, W, W, W, W, W, W, W, D, W, D, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, D, D, D, D, D, D, D, D, D, D, D, D, D, W, W, W, W, W, W, W, W, W, W, D, D, D, D, D, D, D, W, D, W, D, D, D, D, D, D, D, D, D, D, D, S, D
