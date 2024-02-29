@@ -34,7 +34,7 @@ FILE *open_file(char *filename, char *mode)
  * @brief Reads the data from the input file into an array of structs
  *
  * @param inputFile the open file object
- * @param dataArray the array of readings
+ * @param output the array of readings
  * @return int Returns the number of readings from the file
  */
 int read_file(FILE *inputFile, char output[MAX_SIZE][MAX_SIZE])
@@ -56,7 +56,7 @@ int read_file(FILE *inputFile, char output[MAX_SIZE][MAX_SIZE])
  * @brief Checks that there was data for each part of each reading in the file
  *
  * @param MAZE The array of data from the file
- * @param Count The number of readings in the array
+ * @param count The number of readings in the array
  * @return int Return 0 if there are no errors, 1 if you find an error.
  */
 int data_checker(MAZE MAZE, int count)
@@ -115,8 +115,7 @@ Player_position set_player_position(MAZE MAZE)
 }
 /**
  * @brief Find the start position in the file if not returns 0,0
- * @param MAZE The array of data from the file and 
- * containing the len of the file and start/end positions
+ * @param MAZE The array of data from the file
  * @return Return start_position coordanates if there are no errors
  */
 Player_position find_start_postion(MAZE MAZE){
@@ -138,8 +137,7 @@ Player_position find_start_postion(MAZE MAZE){
 }
 /**
  * @brief Find the end position in the file and if not returns 0,0
- * @param MAZE The array of data from the file and 
- * containing the len of the file and start/end positions
+ * @param MAZE The array of data from the file
  * @return Return end_position coordanates if there are no errors
  */
 Player_position find_end_postion(MAZE MAZE){
@@ -208,6 +206,19 @@ Player_position movePlayer(MAZE MAZE, Player_position Player,char move)
     default:
         printf("Invalid move\n");
         break;
+    }
+    // Checking if we haven't passed the border of the map
+    if (updated_pos.x == 0){
+        updated_pos.x += 1;
+    }
+    if (updated_pos.x == MAZE.MAX_row){
+        updated_pos.x -= 1;
+    }
+    if (updated_pos.y == 0){
+        updated_pos.y += 1;
+    }
+    if (updated_pos.y == MAZE.MAX_col){
+        updated_pos.y -= 1;
     }
     return updated_pos;
 }

@@ -3,12 +3,12 @@
 This is the test script to test the function data_checker
 If the segmentation core dump
 The bash will detect and it will fail
-If the code returns 0
+If the code returns the correct col_index
 The test was sucessful
 */
 int main(){
     MAZE maze;
-    char filename[20];
+    char filename[30];
     scanf(" %s",filename);
     FILE *f = open_file(filename,"r");
     int count = read_file(f,maze.map);

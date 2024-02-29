@@ -2,28 +2,37 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+/*
+ * Maze Game: A basic game where players navigate a maze loaded from a file.
+ * Maze characters: '#' for walls, ' ' for paths, 'S' for start, 'E' for exit.
+ * Maze dimensions range from 5x5 to 100x100, and the shape is rectangular.
+ * Players move using WASD (not keypress-triggered) and cannot pass through walls or the map edge.
+ * Pressing 'M'/'m' shows the map with the player's location marked by 'X'. Reaching 'E' ends the game.
+ */
 int main(){
     MAZE Maze;
     // need a system to change the map
-    char filename;;
+    char filename[30];
     printf("Insert maze filename:");
-    scanf(" %s",&filename);
-    //checking if map was selected
-    if (&filename == NULL)
+    scanf("%s",filename);
+    //checking if filename is not empty
+    if (filename == NULL)
     {
         printf("cant find file");
         return 1;
     }
-    FILE *f = open_file(&filename, "r");
+    printf("%s",filename);
+    FILE *f = open_file(filename, "r");
     // read the opened file which returns the len of the output
-    Maze.MAX_row = read_file(f,Maze.map);
+    int index_row = read_file(f,Maze.map);
     fclose(f);
+    Maze.MAX_row = index_row;
     // // find the length of the colum
-    Maze.MAX_col = data_checker(Maze,Maze.MAX_row);
+    int index_col = data_checker(Maze,Maze.MAX_row);
+    Maze.MAX_col = index_col;
     //set start/end point
     //create a struct to store the coordanates then assigne them to the maze
-    
+    printf("%d %d",Maze.MAX_col,Maze.MAX_row);
     Player_position start_coor = find_start_postion(Maze);
     printf("%d %d",start_coor.x,start_coor.y);
     // Checking if start postition was found
