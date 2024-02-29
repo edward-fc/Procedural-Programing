@@ -263,3 +263,4 @@ echo //
 # Report results
 echo Test Results for non comfrom maps
 echo "$passed_tests/$total_tests tests were successful."
+

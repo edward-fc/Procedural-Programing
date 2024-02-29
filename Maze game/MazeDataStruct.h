@@ -61,9 +61,11 @@ int read_file(FILE *inputFile, char output[MAX_SIZE][MAX_SIZE])
  */
 int data_checker(MAZE MAZE, int count)
 {
+    //check if array is not empty
 	if (count == 0){
 		return 1;
 	}
+    //loop to check the length of each row and if there is string
     int col_index = strlen(MAZE.map[0]);
     for(int i = 0; i< count; i++){
         if (MAZE.map[i] == NULL || strlen(MAZE.map[i]) != col_index){
@@ -82,6 +84,12 @@ int data_checker(MAZE MAZE, int count)
  */
 int print_MAZE(MAZE MAZE, Player_position Player)
 {
+    /* 
+    first loop for row second loop for col then 
+    check if row and col index are the coordanates of the player 
+    if true print player 
+    else print the map
+    */
     for (int row_index = 0; row_index < MAZE.MAX_row; row_index++)
     {
         for (int col_index = 0; col_index < MAZE.MAX_col; col_index++)
@@ -120,8 +128,7 @@ Player_position set_player_position(MAZE MAZE)
  */
 Player_position find_start_postion(MAZE MAZE){
     Player_position start_coordanates;
-    start_coordanates.x = 0;
-    start_coordanates.y = 0;
+    int count = 0;
     for (int row_index = 0; row_index < MAZE.MAX_row; row_index++)
     {
         for (int col_index = 0; col_index < MAZE.MAX_col; col_index++)
@@ -129,11 +136,20 @@ Player_position find_start_postion(MAZE MAZE){
             if (MAZE.map[row_index][col_index] == 'S') {
                 start_coordanates.x = row_index;
                 start_coordanates.y = col_index;
+                count += 1;
             }          
         }
         
     }
+    if (count == 1){
+        return start_coordanates;
+    }
+    // safety net to define the variable to check if the start point was found
+    // or if it was found multiple times
+    start_coordanates.x = 0;
+    start_coordanates.y = 0;
     return start_coordanates;
+    
 }
 /**
  * @brief Find the end position in the file and if not returns 0,0
@@ -142,8 +158,8 @@ Player_position find_start_postion(MAZE MAZE){
  */
 Player_position find_end_postion(MAZE MAZE){
     Player_position end_coordanates;
-    end_coordanates.x = 0;
-    end_coordanates.y = 0;
+    int count = 0;
+    
     for (int row_index = 0; row_index < MAZE.MAX_row; row_index++)
     {
         for (int col_index = 0; col_index < MAZE.MAX_col; col_index++)
@@ -151,10 +167,18 @@ Player_position find_end_postion(MAZE MAZE){
             if (MAZE.map[row_index][col_index] == 'E') {
                 end_coordanates.x = row_index;
                 end_coordanates.y = col_index;
+                count += 1;
             }          
         }
         
     }
+    if (count == 1){
+        return end_coordanates;
+    }
+    // safety net to define the variable to check if the start point was found
+    end_coordanates.x = 0;
+    end_coordanates.y = 0;
+    // or if it was found multiple times
     return end_coordanates;
 }
 /**
@@ -166,9 +190,11 @@ Player_position find_end_postion(MAZE MAZE){
  */
 Player_position movePlayer(MAZE MAZE, Player_position Player,char move)
 {
+    // not using pointer means functions returns updated player struct
     Player_position updated_pos;
     updated_pos.x = Player.x;
     updated_pos.y = Player.y;
+    
     switch (move)
     {
     case 'W':

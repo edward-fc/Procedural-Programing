@@ -18,33 +18,32 @@ int main(){
     //checking if filename is not empty
     if (filename == NULL)
     {
-        printf("cant find file");
+        printf("No file found\n");
         return 1;
     }
-    printf("%s",filename);
+
     FILE *f = open_file(filename, "r");
     // read the opened file which returns the len of the output
-    int index_row = read_file(f,Maze.map);
+    Maze.MAX_row  = read_file(f,Maze.map);
     fclose(f);
-    Maze.MAX_row = index_row;
     // // find the length of the colum
-    int index_col = data_checker(Maze,Maze.MAX_row);
-    Maze.MAX_col = index_col;
+    Maze.MAX_col  = data_checker(Maze,Maze.MAX_row);
     //set start/end point
     //create a struct to store the coordanates then assigne them to the maze
-    printf("%d %d",Maze.MAX_col,Maze.MAX_row);
     Player_position start_coor = find_start_postion(Maze);
     printf("%d %d",start_coor.x,start_coor.y);
     // Checking if start postition was found
     if (start_coor.x == 0 || start_coor.y == 0){
+        printf("There are ever too many Start points or none at all\n");
         return 1;
     }
     Maze.start_pos_x = start_coor.x;
     Maze.start_pos_y = start_coor.y;
-    printf("\n\n");
+
     Player_position end_coor = find_end_postion(Maze);
     // Checking if end postition was found
-    if (start_coor.x == 0 || start_coor.y == 0){
+    if (end_coor.x == 0 || end_coor.y == 0){
+        printf("There are ever too many End points or none at all\n");
         return 1;
     }
     Maze.end_pos_x = end_coor.x;
@@ -53,11 +52,14 @@ int main(){
     // set player position
     Player_position  Player = set_player_position(Maze);
     printf("%d %d\n",Player.x,Player.y);
-    //loop to find player start and end position 
+
+    //loop with function like printMaze and Moveplayer and way to see map 
+    // exit program and exit point when reached the end 
     int Game_State = 1;
 
     while (Game_State)
     {
+        //get user input
         printf("Move (WASD) or Access the Map (M) or Exit (E): ");
         char move;
         scanf(" %c", &move);
@@ -75,10 +77,11 @@ int main(){
                 print_MAZE(Maze,Player);
                 break;
         }
-        //Update Player movement        
+        //Update Player movement with user input    
         Player_position updated_player_movement = movePlayer(Maze,Player,move);
         Player.x = updated_player_movement.x;
         Player.y = updated_player_movement.y;
+
         // Check if the Wincondition has been met
         if (checkWinCondition(Maze,Player)){
             printf("Congratulations, you've found the end!");
