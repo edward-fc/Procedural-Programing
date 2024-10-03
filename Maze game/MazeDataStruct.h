@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 #define MAX_SIZE 102
 //define player
 typedef struct{
@@ -40,12 +41,16 @@ FILE *open_file(char *filename, char *mode)
 int read_file(FILE *inputFile, char output[MAX_SIZE][MAX_SIZE])
 {
 	//Initiation of variables
-    int buffer_size = MAX_SIZE,len=0,function_count=0;
+    int buffer_size = MAX_SIZE,function_count=0;
     
     char line_buffer[buffer_size];
 
     while(fgets(line_buffer, buffer_size, inputFile) != NULL){
         //grab the length of Data Steps   
+        
+        if (strlen(line_buffer)>100 || function_count > 100){
+            return -1;
+        }
         strcpy(output[function_count],line_buffer);
         function_count++;
     }
@@ -62,16 +67,30 @@ int read_file(FILE *inputFile, char output[MAX_SIZE][MAX_SIZE])
 int data_checker(MAZE MAZE, int count)
 {
     //check if array is not empty
-	if (count == 0){
+	if (count <= 5 && count > 101){
 		return 1;
 	}
     //loop to check the length of each row and if there is string
     int col_index = strlen(MAZE.map[0]);
-    for(int i = 0; i< count; i++){
-        if (MAZE.map[i] == NULL || strlen(MAZE.map[i]) != col_index){
+    for(int i = 0; i < count; i++){
+        // to suppress the warning i use this 
+        // https://stackoverflow.com/questions/3642010/can-i-compare-int-with-size-t-directly-in-c
+        if (MAZE.map[i] == NULL || (strlen(MAZE.map[i]) != (size_t)col_index ) || strlen(MAZE.map[i]) <= 5 || strlen(MAZE.map[i]) > 101){
             return 1;
         }
     }
+    
+    for (int row_index = 0; row_index < count; row_index++)
+    {
+        for (int column_index = 0; column_index < col_index; column_index++)
+        {
+            if(MAZE.map[row_index][column_index] != ' ' && MAZE.map[row_index][column_index] != 'S' && MAZE.map[row_index][column_index] != 'E' && MAZE.map[row_index][column_index] != '#' && MAZE.map[row_index][column_index] != '\n'){
+                return 1;
+            }
+        }
+        
+    }
+    
     return col_index;
 }
 
@@ -82,7 +101,7 @@ int data_checker(MAZE MAZE, int count)
  * @param Player_position The coordonates of Player at all times on the MAP
  * @return int Return 0 if there are no errors
  */
-int print_MAZE(MAZE MAZE, Player_position Player)
+int print_maze(MAZE MAZE, Player_position Player)
 {
     /* 
     first loop for row second loop for col then 
@@ -90,6 +109,7 @@ int print_MAZE(MAZE MAZE, Player_position Player)
     if true print player 
     else print the map
     */
+    printf("\n");
     for (int row_index = 0; row_index < MAZE.MAX_row; row_index++)
     {
         for (int col_index = 0; col_index < MAZE.MAX_col; col_index++)
@@ -200,32 +220,32 @@ Player_position movePlayer(MAZE MAZE, Player_position Player,char move)
     case 'W':
     case 'w':
         
-        if (MAZE.map[Player.x-1][Player.y] == ' ' || MAZE.map[Player.x-1][Player.y] == 'E'){
+        if (MAZE.map[Player.x-1][Player.y] == ' ' || MAZE.map[Player.x-1][Player.y] == 'S' || MAZE.map[Player.x-1][Player.y] == 'E'){
                 updated_pos.x = Player.x-1;
         }
         break;
     case 'S':
     case 's':
-        if (MAZE.map[Player.x+1][Player.y] == ' ' || MAZE.map[Player.x+1][Player.y] == 'E'){
+        if (MAZE.map[Player.x+1][Player.y] == ' ' || MAZE.map[Player.x+1][Player.y] == 'S' || MAZE.map[Player.x+1][Player.y] == 'E'){
                 updated_pos.x = Player.x+1;
 
         }
         break;
     case 'D':
     case 'd':
-        if (MAZE.map[Player.x][Player.y+1] == ' ' || MAZE.map[Player.x][Player.y+1] == 'E'){
+        if (MAZE.map[Player.x][Player.y+1] == ' ' || MAZE.map[Player.x][Player.y+1] == 'S' || MAZE.map[Player.x][Player.y+1] == 'E'){
                 updated_pos.y = Player.y+1;
 
         }
         break;
     case 'A':
     case 'a':
-        if (MAZE.map[Player.x][Player.y-1] == ' ' || MAZE.map[Player.x][Player.y-1] == 'E'){
+        if (MAZE.map[Player.x][Player.y-1] == ' ' || MAZE.map[Player.x][Player.y-1] == 'S' || MAZE.map[Player.x][Player.y-1] == 'E'){
                 updated_pos.y = Player.y-1;
         }
         break;
-    case 'E':
-    case 'e':
+    // case 'E':
+    // case 'e':
     case 'M':
     case 'm':
         break;
@@ -234,13 +254,13 @@ Player_position movePlayer(MAZE MAZE, Player_position Player,char move)
         break;
     }
     // Checking if we haven't passed the border of the map
-    if (updated_pos.x == 0){
+    if (updated_pos.x == -1){
         updated_pos.x += 1;
     }
     if (updated_pos.x == MAZE.MAX_row){
         updated_pos.x -= 1;
     }
-    if (updated_pos.y == 0){
+    if (updated_pos.y == -1){
         updated_pos.y += 1;
     }
     if (updated_pos.y == MAZE.MAX_col){

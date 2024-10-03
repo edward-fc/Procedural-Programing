@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+
 /*
  * Maze Game: A basic game where players navigate a maze loaded from a file.
  * Maze characters: '#' for walls, ' ' for paths, 'S' for start, 'E' for exit.
@@ -9,25 +11,38 @@
  * Players move using WASD (not keypress-triggered) and cannot pass through walls or the map edge.
  * Pressing 'M'/'m' shows the map with the player's location marked by 'X'. Reaching 'E' ends the game.
  */
-int main(){
+int main(int argc, char *argv[]){
     MAZE Maze;
-    // need a system to change the map
-    char filename[30];
-    printf("Insert maze filename:");
-    scanf("%s",filename);
-    //checking if filename is not empty
-    if (filename == NULL)
-    {
-        printf("No file found\n");
+    // need check if there are not mutliple arguments
+    if (argc != 2){
         return 1;
     }
-
+    
+    char *filename = argv[1];
+    //checking if filename is not empty
+    // stack overflow to see catch error that the file doesnt exist
+    // https://stackoverflow.com/questions/230062/whats-the-best-way-to-check-if-a-file-exists-in-c
+    if (filename == NULL || access(filename,F_OK))
+    {
+        printf("No file found or filename does not exist\n");
+        return 2;
+    }
     FILE *f = open_file(filename, "r");
     // read the opened file which returns the len of the output
     Maze.MAX_row  = read_file(f,Maze.map);
+    // If true means that the file has row bigger than 100 characteres
     fclose(f);
+    if (Maze.MAX_row == -1){
+        printf("over 100 characteres");
+        return 3;
+    }
+    
     // // find the length of the colum
     Maze.MAX_col  = data_checker(Maze,Maze.MAX_row);
+    // if Max_col then maze is invalid
+    if (Maze.MAX_col == 1){
+        return 3;
+    }
     //set start/end point
     //create a struct to store the coordanates then assigne them to the maze
     Player_position start_coor = find_start_postion(Maze);
@@ -35,7 +50,7 @@ int main(){
     // Checking if start postition was found
     if (start_coor.x == 0 || start_coor.y == 0){
         printf("There are ever too many Start points or none at all\n");
-        return 1;
+        return 3;
     }
     Maze.start_pos_x = start_coor.x;
     Maze.start_pos_y = start_coor.y;
@@ -44,7 +59,7 @@ int main(){
     // Checking if end postition was found
     if (end_coor.x == 0 || end_coor.y == 0){
         printf("There are ever too many End points or none at all\n");
-        return 1;
+        return 3;
     }
     Maze.end_pos_x = end_coor.x;
     Maze.end_pos_y = end_coor.y;
@@ -67,20 +82,30 @@ int main(){
         // switch function to show map or end game
         switch (move)
         {
-            case 'E':
-            case 'e':
-                Game_State=0;
-                return 1;
-                break;
+            // case 'E':
+            // case 'e':
+            //     Game_State=0;
+            //     break;
             case 'M':
             case 'm':
-                print_MAZE(Maze,Player);
+                print_maze(Maze,Player);
                 break;
+            case 'W':
+            case 'w':
+            case 'A':
+            case 'a':
+            case 'S':
+            case 's':
+            case 'D':
+            case 'd':
+                //Update Player movement with user input    
+                Player_position updated_player_movement = movePlayer(Maze,Player,move);
+                Player.x = updated_player_movement.x;
+                Player.y = updated_player_movement.y;
+                break;
+            default:
+            return 1;
         }
-        //Update Player movement with user input    
-        Player_position updated_player_movement = movePlayer(Maze,Player,move);
-        Player.x = updated_player_movement.x;
-        Player.y = updated_player_movement.y;
 
         // Check if the Wincondition has been met
         if (checkWinCondition(Maze,Player)){
